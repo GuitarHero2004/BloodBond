@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    alias(libs.plugins.google.gms.google.services)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -33,6 +33,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -63,16 +64,17 @@ dependencies {
     implementation(libs.play.services.location)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.analytics)
-    implementation(libs.google.firebase.analytics)
-    implementation(libs.firebase.database)
-    implementation(libs.firebase.firestore)
+    implementation(libs.com.google.firebase.firebase.analytics)
+    implementation(libs.google.firebase.auth)
+    implementation(libs.google.firebase.firestore)
+
     implementation(libs.annotation)
     implementation(libs.constraintlayout)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.activity)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

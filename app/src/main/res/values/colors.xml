@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="red">#FFFF0000</color>
-    <color name="green">#FF00FF00</color>
-    <color name="blue">#FF0000FF</color>
-    <color name="yellow">#FFFFFF00</color>
-    <color name="cyan">#FF00FFFF</color>
-    <color name="magenta">#FFFF00FF</color>
-    <color name="gray">#FF808080</color>
-    <color name="dark_gray">#FFA9A9A9</color>
-    <color name="light_gray">#FFD3D3D3</color>
-    <color name="orange">#FFFFA500</color>
-    <color name="brown">#FFA52A2A</color>
+    <color name="black">#000000</color> <!-- Black for text -->
+    <color name="purple_500">#9C27B0</color> <!-- Primary color for the app -->
+    <color name="purple_700">#7B1FA2</color> <!-- Darker shade of primary color -->
+    <color name="purple_200">#E1BEE7</color> <!-- Lighter shade of primary color -->
+    <color name="teal_200">#80CBC4</color> <!-- Lighter shade of secondary color -->
+    <color name="teal_700">#00796B</color> <!-- Darker shade of secondary color -->
+    
+    <!-- Primary Colors -->
+    <color name="primary_red">#B71C1C</color> <!-- Deep Red for primary buttons -->
+    <color name="accent_red">#D32F2F</color> <!-- Soft Red for accents -->
+    <color name="white">#FFFFFFFF</color> <!-- Background and text contrast -->
+
+    <!-- Secondary Colors -->
+    <color name="neutral_gray">#757575</color> <!-- Neutral for secondary text -->
+    <color name="light_gray">#F5F5F5</color> <!-- Subtle app background -->
+    <color name="light_blue">#2196F3</color> <!-- Links or highlights -->
+    <color name="success_green">#4CAF50</color> <!-- Success messages -->
+
+    <!-- Accent Colors -->
+    <color name="highlight_orange">#FF9800</color> <!-- Motivational highlights -->
+    <color name="info_yellow">#FFC107</color> <!-- Informational messages -->
+
+    <!-- Text Colors -->
+    <color name="primary_text">#212121</color> <!-- Main text color -->
+    <color name="secondary_text">#757575</color> <!-- Secondary text color -->
+
+    <!-- Button States -->
+    <color name="button_disabled">#BDBDBD</color> <!-- Disabled button background -->
+    <color name="button_pressed">#8E0000</color> <!-- Pressed state for buttons -->
+
+    <!-- Background Colors -->
+    <color name="background_light">#F5F5F5</color> <!-- App background -->
+    <color name="background_dark">#303030</color> <!-- Optional for dark mode -->
 
 </resources>

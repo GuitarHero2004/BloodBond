@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp"
+    android:padding="8dp"
     tools:context=".SignUpView">
 
     <!-- App Name & Slogan-->
@@ -61,7 +61,7 @@
 
             <!-- Phone Field -->
             <EditText
-                android:id="@+id/editTextPhone"
+                android:id="@+id/editTextPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_phone_number"
@@ -163,27 +163,29 @@
             </RadioGroup>
 
             <LinearLayout
+                android:id="@+id/bloodTypeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:paddingHorizontal="8dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/blood_type_label"
-                    android:paddingHorizontal="8dp"
-                    android:layout_marginBottom="4dp"
+                    android:paddingEnd="8dp"
                     android:textSize="16sp"
-                    android:textColor="@color/primary_text"/>
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="center_vertical" />
 
-                <!-- Blood Type Spinner-->
+                <!-- Blood Type Spinner -->
                 <Spinner
                     android:id="@+id/bloodTypeSpinner"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:entries="@array/blood_types"
-                    android:visibility="gone"
-                    android:layout_marginTop="16dp"/>
+                    android:layout_weight="1"
+                    android:entries="@array/blood_types" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -218,18 +220,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_existing_account_label"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:textSize="16sp"/>
+
             <TextView
                 android:id="@+id/signUpLink"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login_existing_account"
-                android:textSize="16sp"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/secondary_text"/>
+                android:text="@string/login_existing_account"
+                android:textColor="@color/accent_red"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

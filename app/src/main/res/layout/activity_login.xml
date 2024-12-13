@@ -175,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up_new_account_label"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:textSize="16sp"/>
             <TextView
@@ -186,7 +186,7 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:textColor="@color/secondary_text"/>
+                android:textColor="@color/accent_red"/>
 
         </LinearLayout>
 

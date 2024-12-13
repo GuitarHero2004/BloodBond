@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".SignUpView">
+
+    <!-- App Name & Slogan-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_red"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/appSlogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_slogan"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:textColor="@color/primary_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+            <!-- Name Field -->
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_name"
+                android:inputType="text"
+                android:autofillHints="name"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+
+            <!-- Phone Field -->
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_phone_number"
+                android:inputType="phone"
+                android:autofillHints="phoneNumber"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+
+            <!-- Date of Birth Field-->
+            <EditText
+                android:id="@+id/editTextDOB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date of Birth"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="none"
+                android:paddingHorizontal="8dp"
+                android:importantForAccessibility="yes"
+                android:contentDescription="Date of Birth input field"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+
+            <!-- Email Field -->
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:autofillHints="emailAddress"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+
+            <!-- Password Field -->
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword"
+                android:autofillHints="password"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+
+            <!-- Re-enter Password Field -->
+            <EditText
+                android:id="@+id/editTextReenterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reenter_password"
+                android:inputType="textPassword"
+                android:autofillHints="password"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/role_label"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="4dp"
+                android:textSize="16sp"
+                android:textColor="@color/primary_text"/>
+
+            <!-- Role Radio -->
+            <RadioGroup
+                android:id="@+id/roleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <RadioButton
+                    android:id="@+id/radioDonor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Donor"
+                    android:layout_marginEnd="16dp"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/radioManager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blood Donation Site Manager" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/blood_type_label"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text"/>
+
+                <!-- Blood Type Spinner-->
+                <Spinner
+                    android:id="@+id/bloodTypeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/blood_types"
+                    android:visibility="gone"
+                    android:layout_marginTop="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Sign-Up Button -->
+        <Button
+            android:id="@+id/buttonSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_sign_up"
+            android:backgroundTint="@color/primary_red"
+            android:textColor="@android:color/white"
+            android:paddingVertical="8dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Login Link -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/signUpLinkLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_existing_account_label"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/signUpLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_existing_account"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/secondary_text"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

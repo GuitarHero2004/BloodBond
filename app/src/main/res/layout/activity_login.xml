@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginView"
+    android:padding="8dp">
+
+    <!-- App Name & Slogan-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_red"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/appSlogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_slogan"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:textColor="@color/primary_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_email_label"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/primary_text"/>
+
+            <!-- Email Field -->
+            <EditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="johndoe@example.com"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:selectAllOnFocus="true"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_password_label"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/primary_text"/>
+
+            <!-- Password Field -->
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:hint="@string/prompt_password"
+                android:imeActionLabel="@string/action_sign_in"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--    &lt;!&ndash; Remember Me and Forgot Password Layout &ndash;&gt;-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginVertical="8dp"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:gravity="center_vertical">-->
+
+    <!--        &lt;!&ndash; Remember Me Checkbox and Label &ndash;&gt;-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            android:layout_weight="1">-->
+
+    <!--            <CheckBox-->
+    <!--                android:id="@+id/remember_me"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/remember_me_label"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="@string/remember_me_login"-->
+    <!--                android:layout_marginStart="4dp" />-->
+    <!--        </LinearLayout>-->
+
+    <!--        &lt;!&ndash; Forgot Password Text &ndash;&gt;-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/forgot_password"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:gravity="center"-->
+    <!--            android:clickable="true"-->
+    <!--            android:focusable="true"-->
+    <!--            android:paddingHorizontal="8dp"-->
+    <!--            android:textSize="24sp"-->
+    <!--            android:text="@string/forgot_password" />-->
+
+    <!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:backgroundTint="@color/primary_red"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:paddingVertical="8dp"
+            android:textStyle="bold"
+            android:text="@string/action_sign_in"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Sign Up Link -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/signUpLinkLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up_new_account_label"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/signUpLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up_new_account"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/secondary_text"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

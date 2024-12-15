@@ -2,23 +2,40 @@ package com.example.bloodbond;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.bloodbond.Adapter.DonorViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class DonorView extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_donor);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        // Find TabLayout and ViewPager2
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager2 viewPager = findViewById(R.id.viewPager);
+
+        // Set up the ViewPagerAdapter
+        DonorViewPagerAdapter adapter = new DonorViewPagerAdapter(this);
+        viewPager.setAdapter(adapter);
+
+        // Attach the TabLayout to the ViewPager2 using TabLayoutMediator
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Dashboard");  // Label for first tab
+                    tab.setIcon(R.drawable.home);
+                    break;
+                case 1:
+                    tab.setText("Map");  // Label for second tab
+                    tab.setIcon(R.drawable.map);
+                    break;
+            }
+        }).attach();
     }
 }

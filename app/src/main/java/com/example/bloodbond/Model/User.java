@@ -7,7 +7,6 @@ public class User {
     private String role;
     private String phoneNumber;
 
-
     public User(String name, String dateOfBirth, String email, String role, String phoneNumber) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;

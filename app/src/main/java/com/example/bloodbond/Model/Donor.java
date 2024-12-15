@@ -4,9 +4,8 @@ public class Donor extends User {
     private String bloodType;
     private String lastDonationDate;
 
-    public Donor(String name, String dateOfBirth, String email, String role, String phoneNumber, String bloodGroup, String lastDonationDate) {
-        super(name, dateOfBirth, email, role, phoneNumber);
-        this.bloodType = bloodGroup;
+    public Donor(String bloodType, String lastDonationDate) {
+        this.bloodType = bloodType;
         this.lastDonationDate = lastDonationDate;
     }
 

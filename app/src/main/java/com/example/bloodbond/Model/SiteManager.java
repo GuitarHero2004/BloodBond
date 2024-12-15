@@ -1,17 +1,16 @@
 package com.example.bloodbond.Model;
 
-public class SiteManagers extends User {
+public class SiteManager extends User {
     private String siteName;
     private String siteLocation;
 
-    public SiteManagers(String name, String dateOfBirth, String email, String role, String phoneNumber, String siteName, String siteLocation) {
-        super(name, dateOfBirth, email, role, phoneNumber);
+    public SiteManager(String siteName, String siteLocation) {
         this.siteName = siteName;
         this.siteLocation = siteLocation;
     }
 
     // Default constructor required for Firestore
-    public SiteManagers() {}
+    public SiteManager() {}
 
     // Getters and setters
     public String getSiteName() {

@@ -21,6 +21,7 @@
     <string name="prompt_phone_number">Phone Number</string>
     <string name="prompt_name">Name</string>
     <string name="blood_type_label">Please select your blood type:</string>
+    <string name="donor_main_dashboard">Donor Main Dashboard</string>
 
     <string-array name="blood_types">
         <item>A+</item>
@@ -32,4 +33,6 @@
         <item>O+</item>
         <item>O-</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

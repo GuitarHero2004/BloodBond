@@ -5,14 +5,15 @@ public class User {
     private String dateOfBirth;
     private String email;
     private String role;
-    private String bloodType; // Only for Donors
+    private String phoneNumber;
 
-    public User(String name, String dateOfBirth, String email, String role, String bloodType) {
+
+    public User(String name, String dateOfBirth, String email, String role, String phoneNumber) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.role = role;
-        this.bloodType = bloodType;
+        this.phoneNumber = phoneNumber;
     }
 
     // Default constructor required for Firestore
@@ -51,12 +52,12 @@ public class User {
         this.role = role;
     }
 
-    public String getBloodType() {
-        return bloodType;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setBloodType(String bloodType) {
-        this.bloodType = bloodType;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
 

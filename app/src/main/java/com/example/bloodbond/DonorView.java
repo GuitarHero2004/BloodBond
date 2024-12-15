@@ -20,6 +20,8 @@ public class DonorView extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
 
+        viewPager.setUserInputEnabled(false);  // Disable swipe
+
         // Set up the ViewPagerAdapter
         DonorViewPagerAdapter adapter = new DonorViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
@@ -34,6 +36,10 @@ public class DonorView extends AppCompatActivity {
                 case 1:
                     tab.setText("Map");  // Label for second tab
                     tab.setIcon(R.drawable.map);
+                    break;
+                case 2:
+                    tab.setText("Profile");  // Label for third tab
+                    tab.setIcon(R.drawable.profile);
                     break;
             }
         }).attach();

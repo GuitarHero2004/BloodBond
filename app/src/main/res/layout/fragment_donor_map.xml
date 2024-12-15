@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context=".DonorMainFragment">
 
-    <TextView
-        android:id="@+id/donorMapFragment"
+    <androidx.fragment.app.FragmentContainerView
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Donor Map Fragment" />
+        android:layout_height="match_parent"
+        android:id="@+id/mapView" />
 
 </LinearLayout>

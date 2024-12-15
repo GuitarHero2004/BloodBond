@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bloodbond.DonorMainFragment;
 import com.example.bloodbond.DonorMapFragment;
+import com.example.bloodbond.DonorUserFragment;
 import com.example.bloodbond.DonorView;
 
 public class DonorViewPagerAdapter extends FragmentStateAdapter {
@@ -22,6 +23,8 @@ public class DonorViewPagerAdapter extends FragmentStateAdapter {
                 return new DonorMainFragment();  // First tab
             case 1:
                 return new DonorMapFragment();   // Second tab
+            case 2:
+                return new DonorUserFragment();  // Third tab
             default:
                 return new DonorMainFragment();
         }
@@ -29,7 +32,7 @@ public class DonorViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 
 }

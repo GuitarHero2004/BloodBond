@@ -35,4 +35,7 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="site_manager_main_dashboard">Site Manager Main Dashboard</string>
+    <string name="add_donation_site">Add Donation Site</string>
+    <string name="logout">Logout</string>
 </resources>

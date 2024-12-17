@@ -9,7 +9,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class FirestoreHelper {
 
@@ -19,39 +18,45 @@ public class FirestoreHelper {
         this.firestore = FirebaseFirestore.getInstance();
     }
 
-
+    public void storeUserData(String uid, Object user, OnDataOperationListener listener) {
+        firestore.collection("users")
+                .document(uid)
+                .set(user)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
 
     public void fetchUserData(String userId, OnUserDataFetchListener listener) {
         FirebaseFirestore.getInstance()
-            .collection("users")
-            .document(userId)
-            .get()
-            .addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    String role = documentSnapshot.getString("role");
+                .collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String role = documentSnapshot.getString("role");
 
-                    if ("Donor".equals(role)) {
-                        Donor donor = documentSnapshot.toObject(Donor.class);
-                        if (donor != null) {
-                            listener.onSuccess(donor); // Pass Donor object directly
+                        if ("Donor".equals(role)) {
+                            Donor donor = documentSnapshot.toObject(Donor.class);
+                            if (donor != null) {
+                                listener.onSuccess(donor); // Pass Donor object directly
+                            } else {
+                                listener.onFailure("Failed to fetch donor data");
+                            }
+                        } else if ("Blood Donation Site Manager".equals(role)) {
+                            SiteManager siteManager = documentSnapshot.toObject(SiteManager.class);
+                            if (siteManager != null) {
+                                listener.onSuccess(siteManager); // Pass SiteManager object directly
+                            } else {
+                                listener.onFailure("Failed to fetch site manager data");
+                            }
                         } else {
-                            listener.onFailure("Failed to fetch donor data");
-                        }
-                    } else if ("Blood Donation Site Manager".equals(role)) {
-                        SiteManager siteManager = documentSnapshot.toObject(SiteManager.class);
-                        if (siteManager != null) {
-                            listener.onSuccess(siteManager); // Pass SiteManager object directly
-                        } else {
-                            listener.onFailure("Failed to fetch site manager data");
+                            listener.onFailure("Unknown role: " + role);
                         }
                     } else {
-                        listener.onFailure("Unknown role: " + role);
+                        listener.onFailure("User does not exist");
                     }
-                } else {
-                    listener.onFailure("User does not exist");
-                }
-            })
-            .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+                })
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
     public void storeDonationSiteData(DonationSite donationSite, OnDataOperationListener listener) {

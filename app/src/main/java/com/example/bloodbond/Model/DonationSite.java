@@ -6,26 +6,26 @@ import java.util.List;
 public class DonationSite {
     private String name;
     private String address;
-    private String bloodTypes;
-    private String openingHours;
-    private String closingHours;
     private String phoneNumber;
-    private String description;
     private String dateOpened;
     private String dateClosed;
-    private List<Donor> registeredDonors = new ArrayList<>();
-    private List<SiteManager> registeredVolunteers = new ArrayList<>();
+    private String openingHours;
+    private String closingHours;
+    private String description;
+    private String bloodTypes;
+    private List<String> registeredDonors = new ArrayList<>();
+    private List<String> registeredVolunteers = new ArrayList<>();
 
-    public DonationSite(String name, String address, String bloodTypes, String openingHours, String closingHours, String phoneNumber, String description, String dateOpened, String dateClosed) {
+    public DonationSite(String name, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes) {
         this.name = name;
         this.address = address;
-        this.bloodTypes = bloodTypes;
-        this.openingHours = openingHours;
-        this.closingHours = closingHours;
         this.phoneNumber = phoneNumber;
-        this.description = description;
         this.dateOpened = dateOpened;
         this.dateClosed = dateClosed;
+        this.openingHours = openingHours;
+        this.closingHours = closingHours;
+        this.description = description;
+        this.bloodTypes = bloodTypes;
     }
 
     // Default constructor required for Firestore
@@ -105,19 +105,19 @@ public class DonationSite {
         this.dateClosed = dateClosed;
     }
 
-    public List<com.example.bloodbond.Model.Donor> getRegisteredDonors() {
+    public List<String> getRegisteredDonors() {
         return registeredDonors;
     }
 
-    public void setRegisteredDonors(List<com.example.bloodbond.Model.Donor> registeredDonors) {
+    public void setRegisteredDonors(List<String> registeredDonors) {
         this.registeredDonors = registeredDonors;
     }
 
-    public List<com.example.bloodbond.Model.SiteManager> getRegisteredVolunteers() {
+    public List<String> getRegisteredVolunteers() {
         return registeredVolunteers;
     }
 
-    public void setRegisteredVolunteers(List<com.example.bloodbond.Model.SiteManager> registeredVolunteers) {
+    public void setRegisteredVolunteers(List<String> registeredVolunteers) {
         this.registeredVolunteers = registeredVolunteers;
     }
 }

@@ -17,14 +17,14 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="32dp"/>
 
     <LinearLayout
         android:id="@+id/addDonationSiteNameContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="64dp">
 
         <!-- TextView for label and EditText for Donation Site Name-->
         <LinearLayout
@@ -228,14 +228,6 @@
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/addDonationSiteDescriptionContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="64dp">
 
         <!-- TextView for label and EditText for Donation Site Description-->
         <LinearLayout

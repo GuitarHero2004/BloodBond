@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "524720463718",
-    "project_id": "bloodbond-a3237",
-    "storage_bucket": "bloodbond-a3237.firebasestorage.app"
+    "project_number": "1000305893765",
+    "project_id": "bloodbond-9fec8",
+    "storage_bucket": "bloodbond-9fec8.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:524720463718:android:f76a7fb4abc01e7c8072a7",
+        "mobilesdk_app_id": "1:1000305893765:android:35fe481336f716c9fe24ec",
         "android_client_info": {
           "package_name": "com.example.bloodbond"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyArulxeHy1CQNmrNRjKufKdmpdZtCQlRkY"
+          "current_key": "AIzaSyCj5jWfWCIjQbwIoGcVrSdpc9wI7X7PQkA"
         }
       ],
       "services": {

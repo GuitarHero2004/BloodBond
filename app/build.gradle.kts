@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
 }
 
@@ -64,8 +65,11 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
 
+    // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))
-    implementation(libs.com.google.firebase.firebase.analytics)
+
+    // Add the dependency for the Firebase SDK for Google Analytics
+    implementation(libs.com.google.firebase.firebase.analytics2)
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.firestore)
 

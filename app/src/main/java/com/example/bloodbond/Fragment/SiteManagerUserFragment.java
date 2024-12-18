@@ -57,7 +57,7 @@ public class SiteManagerUserFragment extends Fragment {
         String userId = Objects.requireNonNull(authHelper.getCurrentUser()).getUid();
         FirestoreHelper firestoreHelper = new FirestoreHelper();
 
-        firestoreHelper.fetchUserData(userId, new FirestoreHelper.OnUserDataFetchListener() {
+        firestoreHelper.fetchSiteManagerData(userId, new FirestoreHelper.OnUserDataFetchListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(Object data) {

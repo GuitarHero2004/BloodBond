@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@drawable/item_card_border">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,8 +42,13 @@
             android:src="@drawable/direction"
             android:background="@null"
             android:layout_marginEnd="16dp" />
-
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondary_text"
+        android:layout_marginBottom="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,26 +57,10 @@
         android:layout_marginBottom="16dp">
 
         <TextView
-            android:id="@+id/donationSiteContact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Site Contact"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
-
-        <TextView
             android:id="@+id/donationSiteDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Donation Site Date"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
-
-        <TextView
-            android:id="@+id/donationSiteWorkingHours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Site Hours"
             android:textSize="18sp"
             android:layout_marginBottom="4dp"/>
 
@@ -82,5 +72,14 @@
             android:textSize="18sp"
             android:layout_marginBottom="4dp"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/donationSiteDetailButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Details"
+        android:textSize="18sp"
+        android:backgroundTint="@color/primary_red"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

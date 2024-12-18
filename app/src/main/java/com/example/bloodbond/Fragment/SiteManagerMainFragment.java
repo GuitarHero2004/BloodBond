@@ -25,45 +25,42 @@ import java.util.List;
 
 public class SiteManagerMainFragment extends Fragment {
 
+    private RecyclerView recyclerView;
     private DonationSiteAdapter adapter;
-    private final List<DonationSite> donationSites = new ArrayList<>();
-    private final FirestoreHelper firestoreHelper = new FirestoreHelper();
+    private List<DonationSite> donationSites = new ArrayList<>();
+    private FirestoreHelper firestoreHelper = new FirestoreHelper();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site_manager_main, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.donationSitesVolunteerRecyclerView);
+        // Initialize RecyclerView
+        recyclerView = view.findViewById(R.id.donationSitesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new DonationSiteAdapter(donationSites);
+
+        adapter = new DonationSiteAdapter(donationSites, getContext());
         recyclerView.setAdapter(adapter);
 
-        LinearLayout addDonationSiteButton = view.findViewById(R.id.customAddDonationSiteButton);
-        addDonationSiteButton.setOnClickListener(v -> {
-            // Navigate to AddDonationSiteActivity
-            Intent intent = new Intent(getContext(), AddDonationSiteActivity.class);
-            startActivity(intent);
-        });
-
-        loadDonationSites();
+        fetchDonationSites();
 
         return view;
     }
 
-    private void loadDonationSites() {
+    private void fetchDonationSites() {
         firestoreHelper.fetchDonationSites(new FirestoreHelper.OnDonationSitesFetchListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onSuccess(List<DonationSite> sites) {
+            public void onSuccess(List<DonationSite> data) {
+                // Update the list and notify the adapter
                 donationSites.clear();
-                donationSites.addAll(sites);
+                donationSites.addAll(data);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                // Handle the error
+                // Handle errors here (e.g., show a Toast or Log the error)
             }
         });
     }

@@ -42,6 +42,9 @@
         <activity
             android:name=".SignUpView"
             android:exported="false" />
+        <activity
+            android:name=".DonationSiteDetailActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

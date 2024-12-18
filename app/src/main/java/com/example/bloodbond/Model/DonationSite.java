@@ -1,10 +1,11 @@
 package com.example.bloodbond.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DonationSite {
-    private String name;
+public class DonationSite implements Serializable {
+    private String siteName;
     private String address;
     private String phoneNumber;
     private String dateOpened;
@@ -16,8 +17,8 @@ public class DonationSite {
     private List<String> registeredDonors = new ArrayList<>();
     private List<String> registeredVolunteers = new ArrayList<>();
 
-    public DonationSite(String name, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes) {
-        this.name = name;
+    public DonationSite(String siteName, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes) {
+        this.siteName = siteName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.dateOpened = dateOpened;
@@ -32,13 +33,12 @@ public class DonationSite {
     public DonationSite() {}
 
     // Getters and setters
-
-    public String getName() {
-        return name;
+    public String getSiteName() {
+        return siteName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
     }
 
     public String getAddress() {

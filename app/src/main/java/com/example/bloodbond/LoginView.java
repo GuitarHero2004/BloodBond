@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bloodbond.Helper.AuthHelper;
+import com.example.bloodbond.helper.AuthHelper;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginView extends AppCompatActivity implements AuthHelper.LoginCallback {

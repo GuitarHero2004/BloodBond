@@ -1,4 +1,4 @@
-package com.example.bloodbond.Fragment;
+package com.example.bloodbond.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,14 +12,12 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.bloodbond.Helper.AuthHelper;
-import com.example.bloodbond.Helper.FirestoreHelper;
+import com.example.bloodbond.helper.AuthHelper;
+import com.example.bloodbond.helper.FirestoreHelper;
 import com.example.bloodbond.LoginView;
-import com.example.bloodbond.Model.Donor;
+import com.example.bloodbond.model.*;
 import com.example.bloodbond.R;
-import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class DonorUserFragment extends Fragment {

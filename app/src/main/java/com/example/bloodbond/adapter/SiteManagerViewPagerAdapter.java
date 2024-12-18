@@ -1,11 +1,11 @@
-package com.example.bloodbond.Adapter;
+package com.example.bloodbond.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.bloodbond.Fragment.SiteManagerMainFragment;
-import com.example.bloodbond.Fragment.SiteManagerUserFragment;
+import com.example.bloodbond.fragment.SiteManagerMainFragment;
+import com.example.bloodbond.fragment.SiteManagerUserFragment;
 import com.example.bloodbond.SiteManagerView;
 
 public class SiteManagerViewPagerAdapter extends FragmentStateAdapter {

@@ -1,4 +1,4 @@
-package com.example.bloodbond.Fragment;
+package com.example.bloodbond.fragment;
 
 import android.os.Bundle;
 
@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 
 import com.example.bloodbond.R;
 
-public class DonorMapFragment extends Fragment {
+public class DonorMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_donor_map, container, false);
+        return inflater.inflate(R.layout.fragment_donor_main, container, false);
     }
-
-
 }

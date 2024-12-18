@@ -1,4 +1,4 @@
-package com.example.bloodbond.Model;
+package com.example.bloodbond.model;
 
 public class Donor extends UserModel {
     private String bloodType;

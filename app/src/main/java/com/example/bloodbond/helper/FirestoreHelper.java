@@ -1,10 +1,8 @@
-package com.example.bloodbond.Helper;
+package com.example.bloodbond.helper;
 
-import com.example.bloodbond.Model.DonationSite;
-import com.example.bloodbond.Model.Donor;
-import com.example.bloodbond.Model.SiteManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.example.bloodbond.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +70,7 @@ public class FirestoreHelper {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        List<DonationSite> sites = new ArrayList<>();
+                        List<DonationSite> sites = new ArrayList<DonationSite>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             DonationSite site = document.toObject(DonationSite.class);
                             sites.add(site);

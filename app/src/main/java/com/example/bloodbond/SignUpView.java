@@ -16,11 +16,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bloodbond.Helper.AuthHelper;
-import com.example.bloodbond.Helper.FirestoreHelper;
-import com.example.bloodbond.Model.Donor;
-import com.example.bloodbond.Model.SiteManager;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.bloodbond.helper.AuthHelper;
+import com.example.bloodbond.helper.FirestoreHelper;
+import com.example.bloodbond.model.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;

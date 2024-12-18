@@ -1,4 +1,4 @@
-package com.example.bloodbond.Helper;
+package com.example.bloodbond.helper;
 
 import android.content.Context;
 import android.content.Intent;

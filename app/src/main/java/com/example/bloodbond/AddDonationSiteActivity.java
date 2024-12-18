@@ -8,14 +8,13 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bloodbond.Helper.FirestoreHelper;
-import com.example.bloodbond.Model.DonationSite;
+import com.example.bloodbond.helper.FirestoreHelper;
+import com.example.bloodbond.model.*;
 
 import java.util.Calendar;
 

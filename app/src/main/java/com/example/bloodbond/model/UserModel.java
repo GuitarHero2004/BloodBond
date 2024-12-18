@@ -1,4 +1,4 @@
-package com.example.bloodbond.Model;
+package com.example.bloodbond.model;
 
 import java.io.Serializable;
 

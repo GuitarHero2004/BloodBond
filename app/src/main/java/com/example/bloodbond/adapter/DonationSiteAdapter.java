@@ -1,4 +1,4 @@
-package com.example.bloodbond.Adapter;
+package com.example.bloodbond.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bloodbond.Model.DonationSite;
 import com.example.bloodbond.R;
-import com.example.bloodbond.DonationSiteDetailActivity;
+import com.example.bloodbond.*;
+import com.example.bloodbond.model.*;
 
 import java.util.List;
 
@@ -45,8 +46,8 @@ public class DonationSiteAdapter extends RecyclerView.Adapter<DonationSiteAdapte
         holder.donationSiteDate.setText(site.getDateOpened() + " - " + site.getDateClosed());
         holder.bloodTypesNeeded.setText(site.getBloodTypes());
 
-        // Handle item clicks
-        holder.itemView.setOnClickListener(v -> {
+        // Set a click listener for the view details button
+        holder.viewDetailsButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, DonationSiteDetailActivity.class);
             intent.putExtra("donationSite", site);
             context.startActivity(intent);
@@ -65,6 +66,7 @@ public class DonationSiteAdapter extends RecyclerView.Adapter<DonationSiteAdapte
         public TextView donationSiteAddress;
         public TextView donationSiteDate;
         public TextView bloodTypesNeeded;
+        public Button viewDetailsButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -74,6 +76,7 @@ public class DonationSiteAdapter extends RecyclerView.Adapter<DonationSiteAdapte
             donationSiteAddress = itemView.findViewById(R.id.donationSiteAddress);
             donationSiteDate = itemView.findViewById(R.id.donationSiteDate);
             bloodTypesNeeded = itemView.findViewById(R.id.bloodTypesNeeded);
+            viewDetailsButton = itemView.findViewById(R.id.donationSiteDetailButton);
         }
     }
 }

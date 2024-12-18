@@ -1,12 +1,12 @@
-package com.example.bloodbond.Adapter;
+package com.example.bloodbond.adapter;
 
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.bloodbond.Fragment.DonorMainFragment;
-import com.example.bloodbond.Fragment.DonorMapFragment;
-import com.example.bloodbond.Fragment.DonorUserFragment;
+import com.example.bloodbond.fragment.DonorMainFragment;
+import com.example.bloodbond.fragment.DonorMapFragment;
+import com.example.bloodbond.fragment.DonorUserFragment;
 import com.example.bloodbond.DonorView;
 
 public class DonorViewPagerAdapter extends FragmentStateAdapter {

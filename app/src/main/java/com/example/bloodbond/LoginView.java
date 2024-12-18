@@ -24,26 +24,20 @@ public class LoginView extends AppCompatActivity implements AuthHelper.LoginCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize views
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.loginButton);
         TextView signUpLink = findViewById(R.id.signUpLink);
         progressBar = findViewById(R.id.progressBar);
 
-        // Check if user is already logged in
         FirebaseUser currentUser = authHelper.getCurrentUser();
         if (currentUser != null) {
-            // If the user is already logged in, sign them out before showing the login screen
             authHelper.logout();
-
-            // Optionally, show a message or handle actions after signing out
             Toast.makeText(LoginView.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
         }
 
-        // Set up listeners
         loginButton.setOnClickListener(v -> {
-            progressBar.setVisibility(View.VISIBLE);  // Show progress bar
+            progressBar.setVisibility(View.VISIBLE);
             authHelper.loginUser(emailInput.getText().toString(), passwordInput.getText().toString(), this);
         });
 
@@ -52,15 +46,18 @@ public class LoginView extends AppCompatActivity implements AuthHelper.LoginCall
 
     @Override
     public void onSuccess(FirebaseUser user) {
-        // Use AuthHelper to handle redirection based on the role
-        progressBar.setVisibility(View.GONE);  // Hide progress bar
+        progressBar.setVisibility(View.GONE);
         authHelper.redirectToRoleBasedActivity(user.getUid(), this);
     }
 
     @Override
     public void onFailure(String message) {
-        // Handle login failure
-        progressBar.setVisibility(View.GONE);  // Hide progress bar
-        Toast.makeText(LoginView.this, "Login failed: " + message, Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.GONE);
+        if (message.contains("network")) {
+            Toast.makeText(LoginView.this, "Network error, please try again.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(LoginView.this, "Login failed: " + message, Toast.LENGTH_SHORT).show();
+        }
     }
+
 }

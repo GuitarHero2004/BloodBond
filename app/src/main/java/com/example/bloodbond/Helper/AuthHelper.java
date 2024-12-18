@@ -42,93 +42,41 @@ public class AuthHelper {
                 });
     }
 
+    public void logout() {
+        auth.signOut();
+    }
+
     public FirebaseUser getCurrentUser() {
         return auth.getCurrentUser();
     }
 
     public void redirectToRoleBasedActivity(String userId, Context context) {
-        firestore.collection("users").document(userId)
+        firestore.collection("donors")
+                .document(userId)
                 .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String role = documentSnapshot.getString("role");
-                        Intent intent;
-                        switch (Objects.requireNonNull(role)) {
-                            case "Donor":
-                                intent = new Intent(context, DonorView.class);
-                                break;
-                            case "Blood Donation Site Manager":
-                                intent = new Intent(context, SiteManagerView.class);
-                                break;
-                            case "Super User":
-                                intent = new Intent(context, SuperUserView.class);
-                                break;
-                            default:
-                                intent = new Intent(context, context.getClass());
-                                Toast.makeText(context, "Role not recognized", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        context.startActivity(intent);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult().exists()) {
+                        context.startActivity(new Intent(context, DonorView.class));
                     } else {
-                        Toast.makeText(context, "User data not found", Toast.LENGTH_SHORT).show();
+                        firestore.collection("siteManagers")
+                                .document(userId)
+                                .get()
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful() && task1.getResult().exists()) {
+                                        context.startActivity(new Intent(context, SiteManagerView.class));
+                                    } else {
+                                        context.startActivity(new Intent(context, SuperUserView.class));
+                                    }
+                                });
                     }
-                })
-                .addOnFailureListener(e -> Toast.makeText(context, "Failed to fetch role", Toast.LENGTH_SHORT).show());
-    }
-
-    public void fetchUserRole(String userId, RoleCallback callback) {
-        firestore.collection("users").document(userId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String role = (String) documentSnapshot.get("role");
-                        if (role != null) {
-                            callback.onRoleFetched(role);
-                        } else {
-                            callback.onFailure(new Exception("Role not found"));
-                        }
-                    } else {
-                        callback.onFailure(new Exception("User not found"));
-                    }
-                })
-                .addOnFailureListener(callback::onFailure);
-    }
-
-    public void logout() {
-        auth.signOut();
-    }
-
-    // Fetch Phone Number for Current User
-    public void fetchUserPhoneNumber(String userId, PhoneNumberCallback callback) {
-        firestore.collection("users").document(userId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String phoneNumber = (String) documentSnapshot.get("phoneNumber");
-                        if (phoneNumber != null) {
-                            callback.onPhoneNumberFetched(phoneNumber);
-                        } else {
-                            callback.onFailure(new Exception("Phone number not found"));
-                        }
-                    } else {
-                        callback.onFailure(new Exception("User not found"));
-                    }
-                })
-                .addOnFailureListener(callback::onFailure);
+                }).addOnFailureListener(e -> {
+                    // Handle error (e.g., Firebase exceptions)
+                    Toast.makeText(context, "Error fetching user role: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     public interface LoginCallback {
         void onSuccess(FirebaseUser user);
         void onFailure(String message);
-    }
-
-    public interface RoleCallback {
-        void onRoleFetched(String role);
-        void onFailure(Exception e);
-    }
-
-    public interface PhoneNumberCallback {
-        void onPhoneNumberFetched(String phoneNumber);
-        void onFailure(Exception e);
     }
 }

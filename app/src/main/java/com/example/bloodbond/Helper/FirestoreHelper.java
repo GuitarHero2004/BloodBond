@@ -1,7 +1,6 @@
 package com.example.bloodbond.Helper;
 
 import com.example.bloodbond.Model.DonationSite;
-import com.example.bloodbond.Model.UserModel;
 import com.example.bloodbond.Model.Donor;
 import com.example.bloodbond.Model.SiteManager;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -9,6 +8,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FirestoreHelper {
 
@@ -18,45 +18,46 @@ public class FirestoreHelper {
         this.firestore = FirebaseFirestore.getInstance();
     }
 
-    public void storeUserData(String uid, Object user, OnDataOperationListener listener) {
-        firestore.collection("users")
+    public void storeDonorData(String uid, Donor donor, OnDataOperationListener listener) {
+        firestore.collection("donors")
                 .document(uid)
-                .set(user)
+                .set(donor)
                 .addOnSuccessListener(aVoid -> listener.onSuccess())
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
-    public void fetchUserData(String userId, OnUserDataFetchListener listener) {
-        FirebaseFirestore.getInstance()
-                .collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String role = documentSnapshot.getString("role");
-
-                        if ("Donor".equals(role)) {
-                            Donor donor = documentSnapshot.toObject(Donor.class);
-                            if (donor != null) {
-                                listener.onSuccess(donor); // Pass Donor object directly
-                            } else {
-                                listener.onFailure("Failed to fetch donor data");
-                            }
-                        } else if ("Blood Donation Site Manager".equals(role)) {
-                            SiteManager siteManager = documentSnapshot.toObject(SiteManager.class);
-                            if (siteManager != null) {
-                                listener.onSuccess(siteManager); // Pass SiteManager object directly
-                            } else {
-                                listener.onFailure("Failed to fetch site manager data");
-                            }
-                        } else {
-                            listener.onFailure("Unknown role: " + role);
-                        }
-                    } else {
-                        listener.onFailure("User does not exist");
-                    }
-                })
+    public void storeSiteManagerData(String uid, SiteManager siteManager, OnDataOperationListener listener) {
+        firestore.collection("siteManagers")
+                .document(uid)
+                .set(siteManager)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
+
+    public void fetchDonorData(String donorId, OnUserDataFetchListener listener) {
+        firestore.collection("donors")
+                .document(donorId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onSuccess(task.getResult().toObject(Donor.class));
+                    } else {
+                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
+    public void fetchSiteManagerData(String siteManagerId, OnUserDataFetchListener listener) {
+        firestore.collection("siteManagers")
+                .document(siteManagerId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onSuccess(task.getResult().toObject(SiteManager.class));
+                    } else {
+                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
     }
 
     public void storeDonationSiteData(DonationSite donationSite, OnDataOperationListener listener) {

@@ -35,6 +35,7 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         Button volunteerRegisterButton = findViewById(R.id.donationSiteVolunteerRegisterButton);
 
         // Populate the details
+        assert donationSite != null;
         siteName.setText(donationSite.getSiteName());
         siteAddress.setText(donationSite.getAddress());
         siteContact.setText(donationSite.getPhoneNumber());

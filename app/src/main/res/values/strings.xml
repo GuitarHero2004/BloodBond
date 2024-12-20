@@ -45,4 +45,8 @@
     <string name="closing_hour">Closing Hour:</string>
     <string name="description">Description:</string>
     <string name="blood_type_needed">Blood Type Needed:</string>
+    <string name="donation_site_name">Donation Site Name</string>
+    <string name="donation_site_address">Donation Site Address</string>
+    <string name="site_navigation_direction_button">Site Navigation Direction Button</string>
+    <string name="updating_notifications">Updating notifications</string>
 </resources>

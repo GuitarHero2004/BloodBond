@@ -38,4 +38,11 @@
     <string name="site_manager_main_dashboard">Site Manager Main Dashboard</string>
     <string name="add_donation_site">Save Donation Site</string>
     <string name="logout">Logout</string>
+    <string name="contact_information">Contact Information:</string>
+    <string name="date_opened">Date Opened:</string>
+    <string name="date_closed">Date Closed:</string>
+    <string name="opening_hour">Opening Hour:</string>
+    <string name="closing_hour">Closing Hour:</string>
+    <string name="description">Description:</string>
+    <string name="blood_type_needed">Blood Type Needed:</string>
 </resources>

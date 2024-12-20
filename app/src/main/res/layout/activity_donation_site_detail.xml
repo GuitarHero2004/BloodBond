@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/item_card_border"
     android:padding="8dp">
 
     <LinearLayout
@@ -31,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Donation Site Address"
+                android:maxLines="2"
                 android:textSize="18sp"
                 android:textStyle="italic" />
         </LinearLayout>
@@ -41,7 +43,6 @@
             android:src="@drawable/direction"
             android:background="@null"
             android:layout_marginEnd="16dp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -50,61 +51,153 @@
         android:orientation="vertical"
         android:layout_marginBottom="16dp">
 
-        <TextView
-            android:id="@+id/donationSiteContact"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Donation Site Contact"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
-        <TextView
-            android:id="@+id/donationSiteDateOpened"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Site Date"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_information"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
 
-        <TextView
-            android:id="@+id/donationSiteDateClosed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Site Date"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            <TextView
+                android:id="@+id/donationSiteContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donation Site Contact"
+                android:textSize="16sp"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/donationSiteOpeningHours"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Donation Site Hours"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
-        <TextView
-            android:id="@+id/donationSiteClosingHours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Site Hours"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_opened"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
 
-        <TextView
-            android:id="@+id/donationSiteDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Donation Site Description"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            <TextView
+                android:id="@+id/donationSiteDateOpened"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donation Site Date"
+                android:textSize="16sp"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/bloodTypesNeeded"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Blood Types Needed"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_closed"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/donationSiteDateClosed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donation Site Date"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/opening_hour"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/donationSiteOpeningHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donation Site Opening Hours"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/closing_hour"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/donationSiteClosingHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donation Site Closing Hours"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/donationSiteDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donation Site Description"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/blood_type_needed"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/bloodTypesNeeded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Blood Types Needed"
+                android:textSize="16sp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

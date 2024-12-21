@@ -4,13 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
+    android:layout_marginVertical="8dp"
     android:background="@drawable/item_card_border">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="8dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -38,9 +39,10 @@
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/direction"
             android:background="@null"
+            android:gravity="top"
             android:layout_marginEnd="16dp" />
     </LinearLayout>
 
@@ -48,29 +50,55 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/secondary_text"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="8dp">
 
-        <TextView
-            android:id="@+id/donationSiteDate"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Donation Site Date"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/bloodTypesNeeded"
-            android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date:"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/donationSiteDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donation Site Date"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Blood Types Needed"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood Types Needed:"
+                android:textSize="18sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/bloodTypesNeeded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Blood Types Needed"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <Button

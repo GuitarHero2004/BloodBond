@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.SiteManagerMainFragment"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:context=".fragment.SiteManagerMainFragment">
 
     <!-- Dashboard Header -->
     <LinearLayout
@@ -28,6 +27,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/updating_notifications"
             android:src="@drawable/notifications"
             android:background="@null" />
     </LinearLayout>
@@ -38,43 +38,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:queryHint="Search donation sites"
-        android:iconifiedByDefault="true"
+        android:iconifiedByDefault="false"
         android:layout_marginBottom="16dp"/>
 
-    <LinearLayout
-        android:id="@+id/customAddDonationSiteButton"
+    <!-- Button to add a new donation site -->
+    <Button
+        android:id="@+id/addDonationSiteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="12dp"
-        android:background="@drawable/rounded_button_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_marginBottom="16dp">
+        android:text="@string/add_donation_site"
+        android:backgroundTint="@color/primary_red"
+        android:layout_marginBottom="16dp"/>
 
-        <!-- Icon -->
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add"
-            android:layout_marginEnd="8dp" />
-
-        <!-- Text -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_donation_site"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <!-- TextView to indicate available donation sites -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Donation Sites"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <!-- RecyclerView to display the donation sites -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/donationSitesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:paddingVertical="8dp"
+        android:layout_marginBottom="4dp"/>
 
 </LinearLayout>

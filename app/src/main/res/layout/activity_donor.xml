@@ -9,14 +9,14 @@
 
     <!-- ViewPager2 for fragments, taking most of the screen -->
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+        android:id="@+id/donorViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <!-- TabLayout at the bottom of the screen -->
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/donorTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp" />

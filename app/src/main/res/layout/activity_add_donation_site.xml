@@ -136,10 +136,13 @@
                 android:id="@+id/dateOpen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:hint="Date Opened"
                 android:inputType="date"
                 android:textSize="20sp"
-                android:layout_gravity="center_horizontal"/>
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
         </LinearLayout>
 
         <!-- TextView for label and tap on EditText to open DatePicker-->
@@ -159,16 +162,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:text="Date Closed:"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
             <EditText
                 android:id="@+id/dateEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:hint="Date Closed"
                 android:inputType="date"
                 android:textSize="20sp"
-                android:layout_gravity="center_horizontal"/>
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
         </LinearLayout>
 
         <!-- TextView for label and EditText for Donation Site Opening Hours-->
@@ -197,7 +203,10 @@
                 android:hint="Hours"
                 android:inputType="time"
                 android:textSize="20sp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
         </LinearLayout>
 
         <!-- TextView for label and EditText for Donation Site Closing Hours-->
@@ -226,7 +235,10 @@
                 android:hint="Hours"
                 android:inputType="time"
                 android:textSize="20sp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
         </LinearLayout>
 
         <!-- TextView for label and EditText for Donation Site Description-->
@@ -314,7 +326,7 @@
             android:id="@+id/addDonationSiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_donation_site"
+            android:text="@string/save_donation_site"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />

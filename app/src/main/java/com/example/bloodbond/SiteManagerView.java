@@ -15,12 +15,11 @@ public class SiteManagerView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_site_manager);
 
         // Find TabLayout and ViewPager2
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
-        ViewPager2 viewPager = findViewById(R.id.viewPager);
+        TabLayout tabLayout = findViewById(R.id.siteManagerTabLayout);
+        ViewPager2 viewPager = findViewById(R.id.siteManagerViewPager);
 
         viewPager.setUserInputEnabled(false);  // Disable swipe
 

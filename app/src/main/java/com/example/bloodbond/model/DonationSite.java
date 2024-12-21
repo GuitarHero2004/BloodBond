@@ -14,10 +14,12 @@ public class DonationSite implements Serializable {
     private String closingHours;
     private String description;
     private String bloodTypes;
+    private double latitude;
+    private double longitude;
     private List<String> registeredDonors = new ArrayList<>();
     private List<String> registeredVolunteers = new ArrayList<>();
 
-    public DonationSite(String siteName, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes) {
+    public DonationSite(String siteName, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes, double latitude, double longitude) {
         this.siteName = siteName;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -27,6 +29,8 @@ public class DonationSite implements Serializable {
         this.closingHours = closingHours;
         this.description = description;
         this.bloodTypes = bloodTypes;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     // Default constructor required for Firestore
@@ -103,6 +107,22 @@ public class DonationSite implements Serializable {
 
     public void setDateClosed(String dateClosed) {
         this.dateClosed = dateClosed;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public List<String> getRegisteredDonors() {

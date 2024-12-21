@@ -17,8 +17,8 @@ public class DonorView extends AppCompatActivity {
         setContentView(R.layout.activity_donor);
 
         // Find TabLayout and ViewPager2
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
-        ViewPager2 viewPager = findViewById(R.id.viewPager);
+        TabLayout tabLayout = findViewById(R.id.donorTabLayout);
+        ViewPager2 viewPager = findViewById(R.id.donorViewPager);
 
         viewPager.setUserInputEnabled(false);  // Disable swipe
 

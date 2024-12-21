@@ -56,10 +56,12 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         // Set button click listeners
         donorRegisterButton.setOnClickListener(v -> {
             // Handle donor registration logic
+
         });
 
         volunteerRegisterButton.setOnClickListener(v -> {
             // Handle volunteer registration logic
+
         });
     }
 }

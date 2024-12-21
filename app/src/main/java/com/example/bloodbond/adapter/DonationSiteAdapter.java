@@ -22,10 +22,12 @@ public class DonationSiteAdapter extends RecyclerView.Adapter<DonationSiteAdapte
 
     private final List<DonationSite> donationSites;
     private final Context context;
+    private final String userRole;
 
-    public DonationSiteAdapter(List<DonationSite> donationSites, Context context) {
+    public DonationSiteAdapter(List<DonationSite> donationSites, Context context, String userRole) {
         this.donationSites = donationSites;
         this.context = context;
+        this.userRole = userRole;
     }
 
     @NonNull
@@ -50,6 +52,7 @@ public class DonationSiteAdapter extends RecyclerView.Adapter<DonationSiteAdapte
         holder.viewDetailsButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, DonationSiteDetailActivity.class);
             intent.putExtra("donationSite", site);
+            intent.putExtra("userRole", userRole);
             context.startActivity(intent);
         });
     }

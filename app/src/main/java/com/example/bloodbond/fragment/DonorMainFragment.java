@@ -24,6 +24,7 @@ public class DonorMainFragment extends Fragment {
     private DonationSiteAdapter adapter;
     private List<DonationSite> donationSites = new ArrayList<>();
     private FirestoreHelper firestoreHelper = new FirestoreHelper();
+    private String userRole;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,11 +32,14 @@ public class DonorMainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_donor_main, container, false);
 
+        // Retrieve the user role from the arguments
+        userRole = getArguments() != null ? getArguments().getString("userRole") : "donors";
+
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.donationSitesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new DonationSiteAdapter(donationSites, getContext());
+        adapter = new DonationSiteAdapter(donationSites, getContext(), userRole);
         recyclerView.setAdapter(adapter);
 
         fetchDonationSites();

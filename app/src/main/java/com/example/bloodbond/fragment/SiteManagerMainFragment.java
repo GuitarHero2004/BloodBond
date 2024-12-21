@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.*;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +19,8 @@ import com.example.bloodbond.helper.FirestoreHelper;
 import com.example.bloodbond.model.DonationSite;
 import com.example.bloodbond.R;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,28 +30,27 @@ public class SiteManagerMainFragment extends Fragment {
     private DonationSiteAdapter adapter;
     private List<DonationSite> donationSites = new ArrayList<>();
     private FirestoreHelper firestoreHelper = new FirestoreHelper();
-    private LinearLayout addDonationSiteButton;
+    private Button addDonationSiteButton;
+    private String userRole;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_site_manager_main, container, false);
 
-        // Initialize Add Donation Site button
-        addDonationSiteButton = view.findViewById(R.id.customAddDonationSiteButton);
+        // Retrieve the user role from the arguments
+        userRole = getArguments() != null ? getArguments().getString("userRole") : "siteManagers";
 
-        addDonationSiteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddDonationSiteActivity.class));
-            }
-        });
+        // Initialize Add Donation Site button
+        addDonationSiteButton = view.findViewById(R.id.addDonationSiteButton);
+
+        addDonationSiteButton.setOnClickListener(v -> startActivity(new Intent(getContext(), AddDonationSiteActivity.class)));
 
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.donationSitesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new DonationSiteAdapter(donationSites, getContext());
+        adapter = new DonationSiteAdapter(donationSites, getContext(), userRole);
         recyclerView.setAdapter(adapter);
 
         fetchDonationSites();

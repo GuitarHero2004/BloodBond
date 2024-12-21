@@ -57,7 +57,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             String bloodTypes = bloodTypeSpinner.getSelectedItem().toString();
 
             // Create a new DonationSite object
-            DonationSite donationSite = new DonationSite(name, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes);
+            DonationSite donationSite = new DonationSite(name, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes, 0, 0);
             Log.d("AddDonationSiteActivity", "Donation Site: " + donationSite);
 
             // Validate the input fields

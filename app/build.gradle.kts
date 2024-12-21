@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation("com.google.android.libraries.places:places:3.3.0")
 
     // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))

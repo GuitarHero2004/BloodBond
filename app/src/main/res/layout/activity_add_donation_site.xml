@@ -81,7 +81,10 @@
                 android:hint="Donation Site Address"
                 android:inputType="text"
                 android:textSize="20sp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
         </LinearLayout>
 
         <!-- TextView for Phone Number and EditText for Donation Phone Number -->
@@ -110,7 +113,9 @@
                 android:hint="Phone Number"
                 android:inputType="phone"
                 android:textSize="20sp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"/>
         </LinearLayout>
 
         <!-- TextView for label and tap on EditText to open DatePicker-->

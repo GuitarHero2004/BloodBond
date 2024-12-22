@@ -32,15 +32,6 @@
             android:background="@null" />
     </LinearLayout>
 
-    <!-- Search Bar for Filtering Donation Sites -->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchVolunteerSites"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="Search donation sites"
-        android:iconifiedByDefault="false"
-        android:layout_marginBottom="16dp"/>
-
     <!-- Button to add a new donation site -->
     <Button
         android:id="@+id/addDonationSiteButton"
@@ -48,6 +39,8 @@
         android:layout_height="wrap_content"
         android:text="@string/add_donation_site"
         android:backgroundTint="@color/primary_red"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
     <!-- TextView to indicate available donation sites -->
@@ -57,6 +50,7 @@
         android:layout_marginBottom="4dp"
         android:text="Donation Sites"
         android:textSize="20sp"
+        android:padding="8dp"
         android:textStyle="bold"/>
 
     <!-- RecyclerView to display the donation sites -->
@@ -64,7 +58,7 @@
         android:id="@+id/donationSitesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="8dp"
+        android:padding="8dp"
         android:layout_marginBottom="4dp"/>
 
 </LinearLayout>

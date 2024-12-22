@@ -50,6 +50,11 @@ public class AuthHelper {
         return auth.getCurrentUser();
     }
 
+    // Get user id
+    public String getUserId() {
+        return Objects.requireNonNull(auth.getCurrentUser()).getUid();
+    }
+
     public void redirectToRoleBasedActivity(String userId, Context context) {
         firestore.collection("donors")
                 .document(userId)

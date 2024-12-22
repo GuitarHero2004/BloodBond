@@ -1,3 +1,5 @@
+import org.gradle.api.JavaVersion
+
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
@@ -26,6 +28,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "MAPS_API_KEY", "\"${"MAPS_API_KEY"}\"")
         }
     }
     compileOptions {
@@ -81,6 +84,9 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.recyclerview)
+    implementation(libs.annotations)
+    implementation(libs.annotations)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

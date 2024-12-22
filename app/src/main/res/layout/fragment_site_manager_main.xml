@@ -53,6 +53,12 @@
         android:padding="8dp"
         android:textStyle="bold"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <!-- RecyclerView to display the donation sites -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/donationSitesRecyclerView"

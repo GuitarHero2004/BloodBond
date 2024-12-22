@@ -104,6 +104,21 @@ public class FirestoreHelper {
                 });
     }
 
+    public void listenForDonationSitesUpdates(OnDonationSitesFetchListener listener) {
+        firestore.collection("donationSites")
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        listener.onFailure(error.getMessage());
+                        return;
+                    }
+                    List<DonationSite> sites = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : value) {
+                        DonationSite site = document.toObject(DonationSite.class);
+                        sites.add(site);
+                    }
+                    listener.onSuccess(sites);
+                });
+    }
 
     public interface OnUserDataFetchListener {
         void onSuccess(Object data);

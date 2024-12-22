@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,7 @@ public class SiteManagerMainFragment extends Fragment {
     private final List<DonationSite> donationSites = new ArrayList<>();
     private final AuthHelper authHelper = new AuthHelper();
     private final FirestoreHelper firestoreHelper = new FirestoreHelper();
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,9 +54,39 @@ public class SiteManagerMainFragment extends Fragment {
         adapter = new DonationSiteAdapter(donationSites, getContext(), userRole);
         recyclerView.setAdapter(adapter);
 
+        progressBar = view.findViewById(R.id.progressBar);
+
         fetchDonationSites();
 
         return view;
+    }
+
+    // This is where we refresh data every time the fragment is resumed (visible)
+    @Override
+    public void onResume() {
+        super.onResume();
+        listenForDonationSitesUpdates();
+    }
+
+    private void listenForDonationSitesUpdates() {
+        progressBar.setVisibility(View.VISIBLE);  // Show loading indicator
+
+        firestoreHelper.listenForDonationSitesUpdates(new FirestoreHelper.OnDonationSitesFetchListener() {
+            @Override
+            public void onSuccess(List<DonationSite> data) {
+                donationSites.clear();
+                donationSites.addAll(data);
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);  // Hide loading indicator
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("SiteManagerMainFragment", "Error fetching donation sites: " + errorMessage);
+                Toast.makeText(getContext(), "Failed to fetch donation sites", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);  // Hide loading indicator
+            }
+        });
     }
 
     private void fetchDonationSites() {

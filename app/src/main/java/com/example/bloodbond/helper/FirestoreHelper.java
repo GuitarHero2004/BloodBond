@@ -77,10 +77,33 @@ public class FirestoreHelper {
                         }
                         listener.onSuccess(sites);
                     } else {
-                        listener.onFailure(task.getException().getMessage());
+                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
                     }
                 });
     }
+
+    public void fetchSiteManagerPhoneNumber(String siteManagerId, OnUserDataFetchListener listener) {
+        firestore.collection("siteManagers")
+                .document(siteManagerId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult() != null && task.getResult().exists()) {
+                            SiteManager siteManager = task.getResult().toObject(SiteManager.class);
+                            if (siteManager != null) {
+                                listener.onSuccess(siteManager.getPhoneNumber());
+                            } else {
+                                listener.onFailure("SiteManager data is missing or malformed");
+                            }
+                        } else {
+                            listener.onFailure("SiteManager document does not exist");
+                        }
+                    } else {
+                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
 
     public interface OnUserDataFetchListener {
         void onSuccess(Object data);

@@ -141,14 +141,26 @@ public class AddDonationSiteActivity extends AppCompatActivity {
     private boolean isStartDateValid(String startDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         try {
+            // Parse the start date entered by the user
             Date start = sdf.parse(startDate);
-            Date currentDate = new Date();
-            return start == null || start.before(currentDate); // Start date must not be before today
+
+            // Get the current date
+            Calendar currentDateCalendar = Calendar.getInstance();
+            currentDateCalendar.set(Calendar.HOUR_OF_DAY, 0);  // Reset time to 00:00
+            currentDateCalendar.set(Calendar.MINUTE, 0);
+            currentDateCalendar.set(Calendar.SECOND, 0);
+            currentDateCalendar.set(Calendar.MILLISECOND, 0);
+
+            // Compare only date (without time) part
+            if (start != null && start.before(currentDateCalendar.getTime())) {
+                return true;  // Invalid if start date is before today
+            }
         } catch (ParseException e) {
             e.printStackTrace();
-            return true;
         }
+        return false;  // Valid if date is today or later
     }
+
 
     private boolean isEndDateValid(String startDate, String endDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

@@ -1,6 +1,5 @@
 package com.example.bloodbond;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -25,10 +24,12 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddDonationSiteActivity extends AppCompatActivity {
     private static final int AUTOCOMPLETE_REQUEST_CODE = 1;
@@ -99,7 +100,32 @@ public class AddDonationSiteActivity extends AppCompatActivity {
     }
 
     private boolean isFormValid() {
-        return  !siteName.getText().toString().isEmpty() &&
+        boolean isValid = true;
+
+        // Validate if the start date is from the current date onwards
+        String startDate = dateOpen.getText().toString();
+        if (isStartDateValid(startDate)) {
+            isValid = false;
+            Toast.makeText(AddDonationSiteActivity.this, "Start date must be today or later", Toast.LENGTH_SHORT).show();
+        }
+
+        // Validate if the end date is not before the start date
+        String endDate = dateEnd.getText().toString();
+        if (!isEndDateValid(startDate, endDate)) {
+            isValid = false;
+            Toast.makeText(AddDonationSiteActivity.this, "End date cannot be before the start date", Toast.LENGTH_SHORT).show();
+        }
+
+        // Validate if opening and closing hours are within the allowed range
+        String openingHour = openingHours.getText().toString();
+        String closingHour = closingHours.getText().toString();
+        if (!areOpeningClosingHoursValid(openingHour, closingHour)) {
+            isValid = false;
+            Toast.makeText(AddDonationSiteActivity.this, "Opening and closing hours must be between 7:00 AM and 5:00 PM, and closing cannot be before opening", Toast.LENGTH_SHORT).show();
+        }
+
+        // Validate the rest of the form fields
+        isValid = isValid && !siteName.getText().toString().isEmpty() &&
                 !siteAddress.getText().toString().isEmpty() &&
                 !bloodTypeSpinner.getSelectedItem().toString().isEmpty() &&
                 !phoneNumber.getText().toString().isEmpty() &&
@@ -108,6 +134,53 @@ public class AddDonationSiteActivity extends AppCompatActivity {
                 !openingHours.getText().toString().isEmpty() &&
                 !closingHours.getText().toString().isEmpty() &&
                 !description.getText().toString().isEmpty();
+
+        return isValid;
+    }
+
+    private boolean isStartDateValid(String startDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            Date start = sdf.parse(startDate);
+            Date currentDate = new Date();
+            return start == null || start.before(currentDate); // Start date must not be before today
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
+    private boolean isEndDateValid(String startDate, String endDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            Date start = sdf.parse(startDate);
+            Date end = sdf.parse(endDate);
+            return end != null && (start == null || !end.before(start)); // End date must not be before start date
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean areOpeningClosingHoursValid(String openingHour, String closingHour) {
+        try {
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            Date openTime = timeFormat.parse(openingHour);
+            Date closeTime = timeFormat.parse(closingHour);
+
+            // Define valid time range (7:00 AM - 5:00 PM)
+            Date validOpenTime = timeFormat.parse("07:00");
+            Date validCloseTime = timeFormat.parse("17:00");
+
+            if (openTime == null || closeTime == null) {
+                return false;
+            }
+
+            return !openTime.before(validOpenTime) && !closeTime.after(validCloseTime) && closeTime.after(openTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private DonationSite createDonationSite() {
@@ -131,7 +204,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             longitude = latLng[1];
         }
 
-        return new DonationSite(name, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes, latitude, longitude);
+        return new DonationSite(name, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes, latitude, longitude, null, null);
     }
 
     private void storeDonationSite(DonationSite donationSite) {
@@ -139,11 +212,6 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 Toast.makeText(AddDonationSiteActivity.this, "Donation Site added successfully", Toast.LENGTH_SHORT).show();
-
-                // Get current site manager ID
-                String siteManagerId = authHelper.getUserId();
-                updateSiteManagerSitesManaged(siteManagerId, donationSite);
-
                 finish();
             }
 
@@ -153,44 +221,6 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void updateSiteManagerSitesManaged(String siteManagerId, DonationSite donationSite) {
-        firestoreHelper.fetchSiteManagerData(siteManagerId, new FirestoreHelper.OnUserDataFetchListener() {
-            @Override
-            public void onSuccess(Object data) {
-                SiteManager siteManager = (SiteManager) data;
-
-                // Add the new site to the SiteManager's list of managed sites
-                List<DonationSite> sitesManaged = siteManager.getSitesManaged();
-                if (sitesManaged == null) {
-                    sitesManaged = new ArrayList<>();
-                }
-                sitesManaged.add(donationSite);
-
-                // Update the SiteManager's document
-                firestoreHelper.updateSiteManagerSitesManaged(siteManagerId, sitesManaged, new FirestoreHelper.OnDataOperationListener() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d("AddDonationSiteActivity", "SiteManager's sitesManaged field updated successfully.");
-                        finish(); // End the activity after success
-                    }
-
-                    @Override
-                    public void onFailure(String errorMessage) {
-                        Log.e("AddDonationSiteActivity", "Failed to update SiteManager's sitesManaged field: " + errorMessage);
-                        Toast.makeText(AddDonationSiteActivity.this, "Error updating SiteManager", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-                Log.e("AddDonationSiteActivity", "Failed to fetch SiteManager data: " + errorMessage);
-                Toast.makeText(AddDonationSiteActivity.this, "Error fetching SiteManager data: " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 
     private void showDatePickerDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();
@@ -202,6 +232,11 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             String date = dayOfMonth + "/" + (month1 + 1) + "/" + year1;
             editText.setText(date);
         }, year, month, day);
+
+        // Disable past dates
+        calendar.add(Calendar.DATE, 0);  // Set to today
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
         datePickerDialog.show();
     }
 
@@ -211,14 +246,16 @@ public class AddDonationSiteActivity extends AppCompatActivity {
         int minute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute1) -> {
-            @SuppressLint("DefaultLocale") String time = String.format("%02d:%02d", hourOfDay, minute1);
+            String time = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute1);
             editText.setText(time);
         }, hour, minute, true);
+
         timePickerDialog.show();
     }
 
     private void openPlaceAutocomplete() {
-        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG))
+        // Initialize and start the place autocomplete activity
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG))
                 .build(this);
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
     }
@@ -227,39 +264,17 @@ public class AddDonationSiteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                handlePlaceSelection(data);
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                handleError(data);
-            }
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Get the place details from the returned intent
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            siteAddress.setText(place.getAddress());
+
+            // Store latitude and longitude in the tag for later use
+            siteAddress.setTag(new double[]{place.getLatLng().latitude, place.getLatLng().longitude});
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Log.i("AddDonationSite", "Error: " + status.getStatusMessage());
         }
-    }
-
-    private void handlePlaceSelection(Intent data) {
-        Place place = Autocomplete.getPlaceFromIntent(data);
-        String address = place.getAddress();
-        LatLng latLng = place.getLatLng();
-
-        if (latLng != null) {
-            double latitude = latLng.latitude;
-            double longitude = latLng.longitude;
-
-            // Update the address field and store latitude/longitude in temporary variables
-            siteAddress.setText(address);
-
-            // Optionally, store the latitude/longitude values in temporary variables for later use
-            siteAddress.setTag(new double[]{latitude, longitude});
-        } else {
-            Log.d("AddDonationSiteActivity", "Latitude and Longitude are null.");
-            Toast.makeText(this, "No latitude/longitude available", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    private void handleError(Intent data) {
-        Status status = Autocomplete.getStatusFromIntent(data);
-        Log.e("AddDonationSiteActivity", "Error: " + status.getStatusMessage());
-        Toast.makeText(this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
     }
 }
+

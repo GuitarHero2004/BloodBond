@@ -16,10 +16,10 @@ public class DonationSite implements Serializable {
     private String bloodTypes;
     private double latitude;
     private double longitude;
-    private List<String> registeredDonors = new ArrayList<>();
-    private List<String> registeredVolunteers = new ArrayList<>();
+    private List<Donor> registeredDonors = new ArrayList<>();
+    private List<SiteManager> registeredVolunteers = new ArrayList<>();
 
-    public DonationSite(String siteName, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes, double latitude, double longitude) {
+    public DonationSite(String siteName, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes, double latitude, double longitude, List<Donor> registeredDonors, List<SiteManager> registeredVolunteers) {
         this.siteName = siteName;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -31,6 +31,8 @@ public class DonationSite implements Serializable {
         this.bloodTypes = bloodTypes;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.registeredDonors = registeredDonors != null ? registeredDonors : new ArrayList<>();
+        this.registeredVolunteers = registeredVolunteers != null ? registeredVolunteers : new ArrayList<>();
     }
 
     // Default constructor required for Firestore
@@ -125,19 +127,19 @@ public class DonationSite implements Serializable {
         this.longitude = longitude;
     }
 
-    public List<String> getRegisteredDonors() {
+    public List<Donor> getRegisteredDonors() {
         return registeredDonors;
     }
 
-    public void setRegisteredDonors(List<String> registeredDonors) {
+    public void setRegisteredDonors(List<Donor> registeredDonors) {
         this.registeredDonors = registeredDonors;
     }
 
-    public List<String> getRegisteredVolunteers() {
+    public List<SiteManager> getRegisteredVolunteers() {
         return registeredVolunteers;
     }
 
-    public void setRegisteredVolunteers(List<String> registeredVolunteers) {
+    public void setRegisteredVolunteers(List<SiteManager> registeredVolunteers) {
         this.registeredVolunteers = registeredVolunteers;
     }
 }

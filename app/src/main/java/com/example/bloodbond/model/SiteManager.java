@@ -1,22 +1,23 @@
 package com.example.bloodbond.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SiteManager extends UserModel {
     private String phoneNumber;
-    private List<String> sitesManaged;
+    private List<DonationSite> sitesManaged;
 
-    public SiteManager(String name, String dateOfBirth, String email, String role, String phoneNumber, List<String> sitesManaged) {
+    public SiteManager(String name, String dateOfBirth, String email, String role, String phoneNumber, List<DonationSite> sitesManaged) {
         super(name, dateOfBirth, email, role);
         this.phoneNumber = phoneNumber;
-        this.sitesManaged = sitesManaged;
+        this.sitesManaged = sitesManaged != null ? sitesManaged : new ArrayList<>();
     }
 
     // Default constructor required for Firestore
     public SiteManager() {
         super();
         this.phoneNumber = "";
-        this.sitesManaged = null;
+        this.sitesManaged = new ArrayList<>();
     }
 
     // Getters and setters
@@ -28,11 +29,11 @@ public class SiteManager extends UserModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<String> getSitesManaged() {
+    public List<DonationSite> getSitesManaged() {
         return sitesManaged;
     }
 
-    public void setSitesManaged(List<String> sitesManaged) {
+    public void setSitesManaged(List<DonationSite> sitesManaged) {
         this.sitesManaged = sitesManaged;
     }
 }

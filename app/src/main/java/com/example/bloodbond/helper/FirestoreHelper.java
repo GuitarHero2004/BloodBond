@@ -104,6 +104,14 @@ public class FirestoreHelper {
                 });
     }
 
+    public void updateSiteManagerSitesManaged(String siteManagerId, List<DonationSite> sitesManaged, OnDataOperationListener listener) {
+        firestore.collection("siteManagers")
+                .document(siteManagerId)
+                .update("sitesManaged", sitesManaged)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
+
     public void listenForDonationSitesUpdates(OnDonationSitesFetchListener listener) {
         firestore.collection("donationSites")
                 .addSnapshotListener((value, error) -> {

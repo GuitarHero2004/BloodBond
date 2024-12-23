@@ -1,7 +1,5 @@
 package com.example.bloodbond;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bloodbond.helper.AuthHelper;
 import com.example.bloodbond.helper.FirestoreHelper;
 import com.example.bloodbond.model.*;
 
@@ -26,12 +25,15 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddDonationSiteActivity extends AppCompatActivity {
     private static final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private final FirestoreHelper firestoreHelper = new FirestoreHelper();
+    private final AuthHelper authHelper = new AuthHelper();
     private EditText siteName, siteAddress, phoneNumber, dateOpen, dateEnd, openingHours, closingHours, description;
     private Spinner bloodTypeSpinner;
 
@@ -137,6 +139,11 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 Toast.makeText(AddDonationSiteActivity.this, "Donation Site added successfully", Toast.LENGTH_SHORT).show();
+
+                // Get current site manager ID
+                String siteManagerId = authHelper.getUserId();
+                updateSiteManagerSitesManaged(siteManagerId, donationSite);
+
                 finish();
             }
 
@@ -146,6 +153,44 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void updateSiteManagerSitesManaged(String siteManagerId, DonationSite donationSite) {
+        firestoreHelper.fetchSiteManagerData(siteManagerId, new FirestoreHelper.OnUserDataFetchListener() {
+            @Override
+            public void onSuccess(Object data) {
+                SiteManager siteManager = (SiteManager) data;
+
+                // Add the new site to the SiteManager's list of managed sites
+                List<DonationSite> sitesManaged = siteManager.getSitesManaged();
+                if (sitesManaged == null) {
+                    sitesManaged = new ArrayList<>();
+                }
+                sitesManaged.add(donationSite);
+
+                // Update the SiteManager's document
+                firestoreHelper.updateSiteManagerSitesManaged(siteManagerId, sitesManaged, new FirestoreHelper.OnDataOperationListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("AddDonationSiteActivity", "SiteManager's sitesManaged field updated successfully.");
+                        finish(); // End the activity after success
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.e("AddDonationSiteActivity", "Failed to update SiteManager's sitesManaged field: " + errorMessage);
+                        Toast.makeText(AddDonationSiteActivity.this, "Error updating SiteManager", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.e("AddDonationSiteActivity", "Failed to fetch SiteManager data: " + errorMessage);
+                Toast.makeText(AddDonationSiteActivity.this, "Error fetching SiteManager data: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void showDatePickerDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();

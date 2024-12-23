@@ -225,7 +225,7 @@ public class SignUpView extends AppCompatActivity {
 
         } else if ("Blood Donation Site Manager".equals(role)) {
             String phoneNumber = phoneNumberInput.getText().toString().trim();
-            List<String> sitesManaged = new ArrayList<>();
+            List<DonationSite> sitesManaged = new ArrayList<>();
 
             SiteManager siteManager = new SiteManager(name, dob, email, role, phoneNumber, sitesManaged);
 

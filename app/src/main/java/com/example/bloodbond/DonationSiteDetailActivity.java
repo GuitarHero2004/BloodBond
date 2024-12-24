@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bloodbond.model.*;
+import com.example.bloodbond.model.DonationSite;
 
 public class DonationSiteDetailActivity extends AppCompatActivity {
 
@@ -19,6 +20,13 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         // Retrieve the donation site and user role
         DonationSite donationSite = (DonationSite) getIntent().getSerializableExtra("donationSite");
         String userRole = getIntent().getStringExtra("userRole");
+
+        // Check if donationSite is null and handle the error
+        if (donationSite == null) {
+            Toast.makeText(this, "Error: Donation site data is missing", Toast.LENGTH_LONG).show();
+            finish(); // Close the activity if data is missing
+            return;
+        }
 
         // Initialize UI components
         TextView siteName = findViewById(R.id.donationSiteName);
@@ -34,7 +42,6 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         Button volunteerRegisterButton = findViewById(R.id.donationSiteVolunteerRegisterButton);
 
         // Populate the details
-        assert donationSite != null;
         siteName.setText(donationSite.getSiteName());
         siteAddress.setText(donationSite.getAddress());
         siteContact.setText(donationSite.getPhoneNumber());
@@ -55,12 +62,10 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         // Set button click listeners
         donorRegisterButton.setOnClickListener(v -> {
             // Handle donor registration logic
-
         });
 
         volunteerRegisterButton.setOnClickListener(v -> {
             // Handle volunteer registration logic
-
         });
     }
 }

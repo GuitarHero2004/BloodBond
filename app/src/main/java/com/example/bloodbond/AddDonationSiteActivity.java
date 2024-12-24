@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AddDonationSiteActivity extends AppCompatActivity {
@@ -223,6 +224,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
         firestoreHelper.storeDonationSiteData(donationSite, new FirestoreHelper.OnDataOperationListener() {
             @Override
             public void onSuccess() {
+                updateSiteManagerWithNewSite(donationSite);
                 Toast.makeText(AddDonationSiteActivity.this, "Donation Site added successfully", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -233,6 +235,42 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void updateSiteManagerWithNewSite(DonationSite donationSite) {
+        // Retrieve the SiteManager's ID (e.g., from the current authenticated user)
+        String siteManagerId = authHelper.getUserId();
+
+        firestoreHelper.fetchSiteManagerData(siteManagerId, new FirestoreHelper.OnUserDataFetchListener() {
+            @Override
+            public void onSuccess(Object data) {
+                SiteManager siteManager = (SiteManager) data;
+
+                // Add the new donation site to the sitesManaged list
+                List<DonationSite> updatedSitesManaged = siteManager.getSitesManaged();
+                updatedSitesManaged.add(donationSite);
+
+                // Update the SiteManager document with the new sitesManaged list
+                firestoreHelper.updateSiteManagerSitesManaged(siteManagerId, updatedSitesManaged, new FirestoreHelper.OnDataOperationListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(AddDonationSiteActivity.this, "Donation Site added and SiteManager updated", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(AddDonationSiteActivity.this, "Failed to update SiteManager: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(AddDonationSiteActivity.this, "Failed to fetch SiteManager data: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void showDatePickerDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();

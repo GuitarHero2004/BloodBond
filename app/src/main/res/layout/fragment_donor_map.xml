@@ -12,16 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Search Bar -->
-    <SearchView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchView"
-        android:iconifiedByDefault="false"
-        android:queryHint="Search for donation sites"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="16dp"
-        android:background="@drawable/item_card_border"
-        android:layout_gravity="top"/>
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Search Bar -->
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search for donation sites"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/item_card_border"
+            android:layout_gravity="top"/>
+
+        <!-- RecyclerView to display the donation sites -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/donationSitesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_card_border"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 </FrameLayout>

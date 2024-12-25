@@ -28,8 +28,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +119,24 @@ public class DonorMapFragment extends Fragment implements OnMapReadyCallback {
                 resetFilteredSites();
             }
         });
+
+        // Add markers on click event
+        myMap.setOnMarkerClickListener(marker -> {
+            DonationSite donationSite = (DonationSite) marker.getTag();
+            if (donationSite != null) {
+                showBottomSheet(donationSite);
+            }
+            return false;
+        });
+    }
+
+    private void showBottomSheet(DonationSite donationSite) {
+        // Show the BottomMapInfoFragment with the selected DonationSite
+        BottomMapInfoFragment bottomSheetFragment = new BottomMapInfoFragment(donationSite);
+        bottomSheetFragment.setOnDismissListener(dialog -> {
+            // Handle the dismissal of the BottomSheet if needed
+        });
+        bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
     }
 
     // Reset filtered sites to show all available sites
@@ -204,9 +225,19 @@ public class DonorMapFragment extends Fragment implements OnMapReadyCallback {
                 donationSites.addAll(data);
                 filteredSites.addAll(data);
                 adapter.notifyDataSetChanged();
+
+                // Set a custom marker icon
+                BitmapDescriptor customMarker = BitmapDescriptorFactory.fromResource(R.drawable.blood_bag);
+
                 for (DonationSite site : data) {
                     LatLng location = new LatLng(site.getLatitude(), site.getLongitude());
-                    myMap.addMarker(new MarkerOptions().position(location).title(site.getSiteName()));
+                    Marker marker = myMap.addMarker(new MarkerOptions()
+                            .position(location)
+                            .title(site.getSiteName())
+                            .icon(customMarker));
+
+                    // Attach the DonationSite object to the marker
+                    marker.setTag(site);
                 }
             }
 
@@ -234,4 +265,3 @@ public class DonorMapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 }
-

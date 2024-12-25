@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.appcompat.widget.SearchView;
 
 import com.example.bloodbond.R;
 import com.example.bloodbond.adapter.DonationSiteAdapter;
@@ -20,11 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DonorMainFragment extends Fragment {
-    private RecyclerView recyclerView;
     private DonationSiteAdapter adapter;
-    private List<DonationSite> donationSites = new ArrayList<>();
-    private FirestoreHelper firestoreHelper = new FirestoreHelper();
-    private String userRole;
+    private final List<DonationSite> donationSites = new ArrayList<>();
+    private final FirestoreHelper firestoreHelper = new FirestoreHelper();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,11 +31,34 @@ public class DonorMainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_donor_main, container, false);
 
+        // Initialize the search bar
+        SearchView searchView = view.findViewById(R.id.donationSitesSearchView);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                v.requestFocus();
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         // Retrieve the user role from the arguments
-        userRole = getArguments() != null ? getArguments().getString("userRole") : "donors";
+        String userRole = getArguments() != null ? getArguments().getString("userRole") : "donors";
 
         // Initialize RecyclerView
-        recyclerView = view.findViewById(R.id.donationSitesRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.donationSitesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new DonationSiteAdapter(donationSites, getContext(), userRole);
@@ -52,9 +74,12 @@ public class DonorMainFragment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSuccess(List<DonationSite> data) {
-                // Update the list and notify the adapter
                 donationSites.clear();
                 donationSites.addAll(data);
+
+                // Update the full list in the adapter
+                adapter.updateFullList(data);
+
                 adapter.notifyDataSetChanged();
             }
 

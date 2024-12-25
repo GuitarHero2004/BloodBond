@@ -57,6 +57,9 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
             volunteerRegisterButton.setVisibility(View.GONE);
         } else if ("siteManagers".equals(userRole)) {
             donorRegisterButton.setVisibility(View.GONE);
+        } else {
+            donorRegisterButton.setVisibility(View.GONE);
+            volunteerRegisterButton.setVisibility(View.GONE);
         }
 
         // Set button click listeners

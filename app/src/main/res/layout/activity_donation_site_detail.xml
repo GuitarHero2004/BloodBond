@@ -35,14 +35,6 @@
                 android:textSize="20sp"
                 android:textStyle="italic" />
         </LinearLayout>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/site_navigation_direction_button"
-            android:src="@drawable/direction"
-            android:background="@null"
-            android:layout_marginEnd="16dp" />
     </LinearLayout>
 
     <View

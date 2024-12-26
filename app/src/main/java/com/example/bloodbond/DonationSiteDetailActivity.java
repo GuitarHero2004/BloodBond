@@ -14,6 +14,8 @@ import com.example.bloodbond.model.DonationSite;
 import com.example.bloodbond.model.Donor;
 import com.example.bloodbond.model.SiteManager;
 
+import java.util.List;
+
 public class DonationSiteDetailActivity extends AppCompatActivity {
     private final AuthHelper authHelper = new AuthHelper();
     private final FirestoreHelper firestoreHelper = new FirestoreHelper();
@@ -76,9 +78,32 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         volunteerRegisterButton.setOnClickListener(v -> registerVolunteer());
     }
 
+    private boolean isUserAlreadyRegisteredAsDonor() {
+        for (Donor donor : donationSite.getRegisteredDonors()) {
+            if (donor.getUserId() != null && donor.getUserId().equals(userId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isUserAlreadyRegisteredAsVolunteer() {
+        for (SiteManager volunteer : donationSite.getRegisteredVolunteers()) {
+            if (volunteer.getUserId() != null && volunteer.getUserId().equals(userId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void registerDonor() {
         if (userId == null) {
             Toast.makeText(this, "Error: User ID is missing", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (isUserAlreadyRegisteredAsDonor()) {
+            Toast.makeText(this, "You are already registered as a donor at this site", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -113,6 +138,11 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
             return;
         }
 
+        if (isUserAlreadyRegisteredAsVolunteer()) {
+            Toast.makeText(this, "You are already registered as a volunteer at this site", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         firestoreHelper.fetchSiteManagerData(userId, new FirestoreHelper.OnUserDataFetchListener() {
             @Override
             public void onSuccess(Object data) {
@@ -121,6 +151,7 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
                 firestoreHelper.updateDonationSite(donationSite, new FirestoreHelper.OnDataOperationListener() {
                     @Override
                     public void onSuccess() {
+                        updateSiteManagerSitesManaged(siteManager);
                         Toast.makeText(DonationSiteDetailActivity.this, "Volunteer registered successfully", Toast.LENGTH_SHORT).show();
                     }
 
@@ -134,6 +165,28 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(String errorMessage) {
                 Toast.makeText(DonationSiteDetailActivity.this, "Failed to fetch site manager data: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateSiteManagerSitesManaged(SiteManager siteManager) {
+        List<DonationSite> sitesManaged = siteManager.getSitesManaged();
+        for (DonationSite site : sitesManaged) {
+            if (site.getSiteId() != null && site.getSiteId().equals(donationSite.getSiteId())) {
+                sitesManaged.remove(site);
+                sitesManaged.add(donationSite);
+                break;
+            }
+        }
+        firestoreHelper.updateSiteManagerSitesManaged(userId, sitesManaged, new FirestoreHelper.OnDataOperationListener() {
+            @Override
+            public void onSuccess() {
+                // Successfully updated sites managed
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(DonationSiteDetailActivity.this, "Failed to update sites managed: " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

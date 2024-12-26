@@ -205,7 +205,7 @@ public class SignUpView extends AppCompatActivity {
     private void storeUserDataInFirestore(String uid, String email, String role, String name, String dob) {
         if ("Donor".equals(role)) {
             String bloodType = bloodTypeSpinner.getSelectedItem().toString();
-            Donor donor = new Donor(name, dob, email, role, bloodType, 0);
+            Donor donor = new Donor(uid, name, dob, email, role, bloodType, 0);
 
             firestoreHelper.storeDonorData(uid, donor, new FirestoreHelper.OnDataOperationListener() {
                 @Override
@@ -227,7 +227,7 @@ public class SignUpView extends AppCompatActivity {
             String phoneNumber = phoneNumberInput.getText().toString().trim();
             List<DonationSite> sitesManaged = new ArrayList<>();
 
-            SiteManager siteManager = new SiteManager(name, dob, email, role, phoneNumber, sitesManaged);
+            SiteManager siteManager = new SiteManager(uid, name, dob, email, role, phoneNumber, sitesManaged);
 
             firestoreHelper.storeSiteManagerData(uid, siteManager, new FirestoreHelper.OnDataOperationListener() {
                 @Override

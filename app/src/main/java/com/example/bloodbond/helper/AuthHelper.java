@@ -52,7 +52,8 @@ public class AuthHelper {
 
     // Get user id
     public String getUserId() {
-        return Objects.requireNonNull(auth.getCurrentUser()).getUid();
+        FirebaseUser user = getCurrentUser();
+        return user != null ? user.getUid() : null;
     }
 
     public void redirectToRoleBasedActivity(String userId, Context context) {

@@ -8,9 +8,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bloodbond.helper.AuthHelper;
+import com.example.bloodbond.helper.FirestoreHelper;
 import com.example.bloodbond.model.DonationSite;
+import com.example.bloodbond.model.Donor;
+import com.example.bloodbond.model.SiteManager;
 
 public class DonationSiteDetailActivity extends AppCompatActivity {
+    private final AuthHelper authHelper = new AuthHelper();
+    private final FirestoreHelper firestoreHelper = new FirestoreHelper();
+    private DonationSite donationSite;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +26,9 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_donation_site_detail);
 
         // Retrieve the donation site and user role
-        DonationSite donationSite = (DonationSite) getIntent().getSerializableExtra("donationSite");
+        donationSite = (DonationSite) getIntent().getSerializableExtra("donationSite");
         String userRole = getIntent().getStringExtra("userRole");
+        userId = authHelper.getUserId();
 
         // Check if donationSite is null and handle the error
         if (donationSite == null) {
@@ -63,12 +72,69 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         }
 
         // Set button click listeners
-        donorRegisterButton.setOnClickListener(v -> {
-            // Handle donor registration logic
-        });
+        donorRegisterButton.setOnClickListener(v -> registerDonor());
+        volunteerRegisterButton.setOnClickListener(v -> registerVolunteer());
+    }
 
-        volunteerRegisterButton.setOnClickListener(v -> {
-            // Handle volunteer registration logic
+    private void registerDonor() {
+        if (userId == null) {
+            Toast.makeText(this, "Error: User ID is missing", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        firestoreHelper.fetchDonorData(userId, new FirestoreHelper.OnUserDataFetchListener() {
+            @Override
+            public void onSuccess(Object data) {
+                Donor donor = (Donor) data;
+                donationSite.getRegisteredDonors().add(donor);
+                firestoreHelper.updateDonationSite(donationSite, new FirestoreHelper.OnDataOperationListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(DonationSiteDetailActivity.this, "Donor registered successfully", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(DonationSiteDetailActivity.this, "Failed to register donor: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(DonationSiteDetailActivity.this, "Failed to fetch donor data: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void registerVolunteer() {
+        if (userId == null) {
+            Toast.makeText(this, "Error: User ID is missing", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        firestoreHelper.fetchSiteManagerData(userId, new FirestoreHelper.OnUserDataFetchListener() {
+            @Override
+            public void onSuccess(Object data) {
+                SiteManager siteManager = (SiteManager) data;
+                donationSite.getRegisteredVolunteers().add(siteManager);
+                firestoreHelper.updateDonationSite(donationSite, new FirestoreHelper.OnDataOperationListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(DonationSiteDetailActivity.this, "Volunteer registered successfully", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(DonationSiteDetailActivity.this, "Failed to register volunteer: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(DonationSiteDetailActivity.this, "Failed to fetch site manager data: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

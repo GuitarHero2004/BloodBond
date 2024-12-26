@@ -16,11 +16,6 @@ public class FirestoreHelper {
         this.firestore = FirebaseFirestore.getInstance();
     }
 
-    // -------------------- Donor Methods --------------------
-
-    /**
-     * Stores donor data in Firestore.
-     */
     public void storeDonorData(String uid, Donor donor, OnDataOperationListener listener) {
         firestore.collection("donors")
                 .document(uid)
@@ -29,9 +24,14 @@ public class FirestoreHelper {
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
-    /**
-     * Fetches donor data from Firestore by donor ID.
-     */
+    public void storeSiteManagerData(String uid, SiteManager siteManager, OnDataOperationListener listener) {
+        firestore.collection("siteManagers")
+                .document(uid)
+                .set(siteManager)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
+
     public void fetchDonorData(String donorId, OnUserDataFetchListener listener) {
         firestore.collection("donors")
                 .document(donorId)
@@ -45,22 +45,6 @@ public class FirestoreHelper {
                 });
     }
 
-    // -------------------- Site Manager Methods --------------------
-
-    /**
-     * Stores site manager data in Firestore.
-     */
-    public void storeSiteManagerData(String uid, SiteManager siteManager, OnDataOperationListener listener) {
-        firestore.collection("siteManagers")
-                .document(uid)
-                .set(siteManager)
-                .addOnSuccessListener(aVoid -> listener.onSuccess())
-                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
-    }
-
-    /**
-     * Fetches site manager data from Firestore by site manager ID.
-     */
     public void fetchSiteManagerData(String siteManagerId, OnUserDataFetchListener listener) {
         firestore.collection("siteManagers")
                 .document(siteManagerId)
@@ -74,9 +58,48 @@ public class FirestoreHelper {
                 });
     }
 
-    /**
-     * Fetches the phone number of a site manager by their ID.
-     */
+    public void storeDonationSiteData(DonationSite donationSite, OnDataOperationListener listener) {
+        firestore.collection("donationSites")
+                .add(donationSite)
+                .addOnSuccessListener(documentReference -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
+
+    public void fetchDonationSites(OnDonationSitesFetchListener listener) {
+        firestore.collection("donationSites")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DonationSite> sites = new ArrayList<DonationSite>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            DonationSite site = document.toObject(DonationSite.class);
+                            sites.add(site);
+                        }
+                        listener.onSuccess(sites);
+                    } else {
+                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
+    public void fetchManagedDonationSites(String siteManagerId, OnDonationSitesFetchListener listener) {
+        firestore.collection("donationSites")
+                .whereEqualTo("siteManagerId", siteManagerId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DonationSite> sites = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            DonationSite site = document.toObject(DonationSite.class);
+                            sites.add(site);
+                        }
+                        listener.onSuccess(sites);
+                    } else {
+                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
     public void fetchSiteManagerPhoneNumber(String siteManagerId, OnUserDataFetchListener listener) {
         firestore.collection("siteManagers")
                 .document(siteManagerId)
@@ -99,9 +122,6 @@ public class FirestoreHelper {
                 });
     }
 
-    /**
-     * Updates the sites managed by a specific site manager.
-     */
     public void updateSiteManagerSitesManaged(String siteManagerId, List<DonationSite> sitesManaged, OnDataOperationListener listener) {
         firestore.collection("siteManagers")
                 .document(siteManagerId)
@@ -110,41 +130,6 @@ public class FirestoreHelper {
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
-    // -------------------- Donation Site Methods --------------------
-
-    /**
-     * Stores donation site data in Firestore.
-     */
-    public void storeDonationSiteData(DonationSite donationSite, OnDataOperationListener listener) {
-        firestore.collection("donationSites")
-                .add(donationSite)
-                .addOnSuccessListener(documentReference -> listener.onSuccess())
-                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
-    }
-
-    /**
-     * Fetches all donation sites from Firestore.
-     */
-    public void fetchDonationSites(OnDonationSitesFetchListener listener) {
-        firestore.collection("donationSites")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<DonationSite> sites = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            DonationSite site = document.toObject(DonationSite.class);
-                            sites.add(site);
-                        }
-                        listener.onSuccess(sites);
-                    } else {
-                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
-                    }
-                });
-    }
-
-    /**
-     * Listens for updates to all donation sites.
-     */
     public void listenForDonationSitesUpdates(OnDonationSitesFetchListener listener) {
         firestore.collection("donationSites")
                 .addSnapshotListener((value, error) -> {
@@ -155,13 +140,38 @@ public class FirestoreHelper {
                     List<DonationSite> sites = new ArrayList<>();
                     for (QueryDocumentSnapshot document : value) {
                         DonationSite site = document.toObject(DonationSite.class);
+                        site.setSiteId(document.getId());
                         sites.add(site);
                     }
                     listener.onSuccess(sites);
                 });
     }
 
-    // -------------------- Listener Interfaces --------------------
+    public void listenForManagedDonationSitesUpdates(String siteManagerId, OnDonationSitesFetchListener listener) {
+        firestore.collection("donationSites")
+                .whereEqualTo("siteManagerId", siteManagerId)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        listener.onFailure(error.getMessage());
+                        return;
+                    }
+                    List<DonationSite> sites = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : value) {
+                        DonationSite site = document.toObject(DonationSite.class);
+                        site.setSiteId(document.getId());
+                        sites.add(site);
+                    }
+                    listener.onSuccess(sites);
+                });
+    }
+
+    public void updateDonationSite(DonationSite donationSite, OnDataOperationListener listener) {
+        firestore.collection("donationSites")
+                .document(donationSite.getSiteId())
+                .set(donationSite)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
 
     public interface OnUserDataFetchListener {
         void onSuccess(Object data);

@@ -35,10 +35,6 @@ public class SiteManagerView extends AppCompatActivity {
                     tab.setIcon(R.drawable.home);
                     break;
                 case 1:
-                    tab.setText("Donation Sites");
-                    tab.setIcon(R.drawable.history);
-                    break;
-                case 2:
                     tab.setText("Profile");
                     tab.setIcon(R.drawable.profile);
                     break;

@@ -90,8 +90,6 @@ public class SiteManagerMainFragment extends Fragment {
     }
 
     private void fetchDonationSites() {
-        progressBar.setVisibility(View.VISIBLE);  // Show loading indicator
-
         firestoreHelper.fetchDonationSites(new FirestoreHelper.OnDonationSitesFetchListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -100,7 +98,6 @@ public class SiteManagerMainFragment extends Fragment {
                 donationSites.clear();
                 donationSites.addAll(data);
                 adapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);  // Hide loading indicator
             }
 
             @Override

@@ -222,6 +222,46 @@
             android:padding="8dp"
             android:textStyle="bold"
             android:backgroundTint="@color/primary_red"/>
+
+        <Button
+            android:id="@+id/viewRegisteredDonorsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Registered Donors"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/secondary_text"/>
+
+        <Button
+            android:id="@+id/viewRegisteredVolunteersButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Registered Volunteers"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/secondary_text"/>
+
+        <Button
+            android:id="@+id/editDonationSiteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Donation Site"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/secondary_text"/>
+
+        <Button
+            android:id="@+id/deleteDonationSiteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Donation Site"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/secondary_text"/>
     </LinearLayout>
 
 </LinearLayout>

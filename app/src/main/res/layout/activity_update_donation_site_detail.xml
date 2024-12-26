@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UpdateDonationSiteDetailActivity"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/updateDonationSiteHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Donation Site"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="32dp"/>
+
+    <LinearLayout
+        android:id="@+id/addDonationSiteNameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="64dp">
+
+        <!-- TextView for label and EditText for Donation Site Name-->
+        <LinearLayout
+            android:id="@+id/addDonationSiteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/siteNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Site Name:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/siteName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Donation Site Name"
+                android:inputType="text"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <!-- TextView for label and EditText for Donation Site Address-->
+        <LinearLayout
+            android:id="@+id/addDonationSiteAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/siteAddressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Address"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/siteAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Donation Site Address"
+                android:inputType="text"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
+        </LinearLayout>
+
+        <!-- TextView for Phone Number and EditText for Donation Phone Number -->
+        <LinearLayout
+            android:id="@+id/addDonationSitePhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/phoneNumberLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Phone Number"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"/>
+        </LinearLayout>
+
+        <!-- TextView for label and tap on EditText to open DatePicker-->
+        <LinearLayout
+            android:id="@+id/addDonationSiteDateOpened"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/dateOpenLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Date Opened:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/dateOpen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="Date Opened"
+                android:inputType="date"
+                android:textSize="20sp"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
+        </LinearLayout>
+
+        <!-- TextView for label and tap on EditText to open DatePicker-->
+        <LinearLayout
+            android:id="@+id/addDonationSiteDateClosed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/dateEndLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Date Closed:"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/dateEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="Date Closed"
+                android:inputType="date"
+                android:textSize="20sp"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
+        </LinearLayout>
+
+        <!-- TextView for label and EditText for Donation Site Opening Hours-->
+        <LinearLayout
+            android:id="@+id/addDonationSiteOpeningHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/openingHoursLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Opening Hours:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/openingHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hours"
+                android:inputType="time"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
+        </LinearLayout>
+
+        <!-- TextView for label and EditText for Donation Site Closing Hours-->
+        <LinearLayout
+            android:id="@+id/addDonationSiteClosingHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/closingHoursLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Closing Hours:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/closingHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hours"
+                android:inputType="time"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:cursorVisible="false"
+                android:clickable="true"/>
+        </LinearLayout>
+
+        <!-- TextView for label and EditText for Donation Site Description-->
+        <LinearLayout
+            android:id="@+id/addDonationSiteDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/descriptionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Description:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:inputType="text"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <!-- TextView for label and EditText for Blood Type Needed -->
+        <LinearLayout
+            android:id="@+id/addDonationSiteBloodType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@null"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/bloodTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="Blood Type Needed:"
+                android:textSize="20sp" />
+
+            <!-- Blood Type Spinner -->
+            <Spinner
+                android:id="@+id/bloodTypeSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:entries="@array/blood_types"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--Custom Add Button to add donation site -->
+    <LinearLayout
+        android:id="@+id/customUpdateDonationSiteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="12dp"
+        android:background="@drawable/rounded_button_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="16dp">
+
+        <!-- Icon -->
+        <ImageView
+            android:id="@+id/addIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/save"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Text -->
+        <TextView
+            android:id="@+id/addDonationSiteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Donation Site"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

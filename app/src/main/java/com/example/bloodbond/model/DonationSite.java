@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DonationSite implements Serializable {
+    private String siteId;
     private String siteName;
     private String address;
     private String phoneNumber;
@@ -39,6 +40,12 @@ public class DonationSite implements Serializable {
     public DonationSite() {}
 
     // Getters and setters
+    public String getSiteId() {
+        return siteId;
+    }
+    public void setSiteId(String siteId) {
+        this.siteId = siteId;
+    }
     public String getSiteName() {
         return siteName;
     }

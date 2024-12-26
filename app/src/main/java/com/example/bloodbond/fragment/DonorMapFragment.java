@@ -134,7 +134,9 @@ public class DonorMapFragment extends Fragment implements OnMapReadyCallback {
         // Show the BottomMapInfoFragment with the selected DonationSite
         BottomMapInfoFragment bottomSheetFragment = new BottomMapInfoFragment(donationSite);
         bottomSheetFragment.setOnDismissListener(dialog -> {
-            // Handle the dismissal of the BottomSheet if needed
+            resetFilteredSites();  // Reset the filtered list
+            searchResultsRecyclerView.setVisibility(filteredSites.isEmpty() ? View.GONE : View.VISIBLE); // Hide if empty
+            adapter.notifyDataSetChanged(); // Update the RecyclerView
         });
         bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
     }

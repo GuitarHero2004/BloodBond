@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bloodbond.AddDonationSiteActivity;
+import com.example.bloodbond.UpdateDonationSiteDetailActivity;
 import com.example.bloodbond.adapter.DonationSiteAdapter;
 import com.example.bloodbond.helper.AuthHelper;
 import com.example.bloodbond.helper.FirestoreHelper;
@@ -43,9 +44,7 @@ public class SiteManagerMainFragment extends Fragment {
         // Initialize Add Donation Site button
         Button addDonationSiteButton = view.findViewById(R.id.addDonationSiteButton);
 
-        addDonationSiteButton.setOnClickListener(v -> {
-            fetchPhoneNumber();
-        });
+        addDonationSiteButton.setOnClickListener(v -> fetchPhoneNumber());
 
         // Initialize RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.donationSitesRecyclerView);
@@ -61,7 +60,6 @@ public class SiteManagerMainFragment extends Fragment {
         return view;
     }
 
-    // This is where we refresh data every time the fragment is resumed (visible)
     @Override
     public void onResume() {
         super.onResume();
@@ -71,7 +69,8 @@ public class SiteManagerMainFragment extends Fragment {
     private void listenForDonationSitesUpdates() {
         progressBar.setVisibility(View.VISIBLE);  // Show loading indicator
 
-        firestoreHelper.listenForDonationSitesUpdates(new FirestoreHelper.OnDonationSitesFetchListener() {
+        String siteManagerId = authHelper.getUserId();
+        firestoreHelper.listenForManagedDonationSitesUpdates(siteManagerId, new FirestoreHelper.OnDonationSitesFetchListener() {
             @Override
             public void onSuccess(List<DonationSite> data) {
                 donationSites.clear();
@@ -90,11 +89,11 @@ public class SiteManagerMainFragment extends Fragment {
     }
 
     private void fetchDonationSites() {
-        firestoreHelper.fetchDonationSites(new FirestoreHelper.OnDonationSitesFetchListener() {
+        String siteManagerId = authHelper.getUserId();
+        firestoreHelper.fetchManagedDonationSites(siteManagerId, new FirestoreHelper.OnDonationSitesFetchListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSuccess(List<DonationSite> data) {
-                // Update the list and notify the adapter
                 donationSites.clear();
                 donationSites.addAll(data);
                 adapter.notifyDataSetChanged();
@@ -102,7 +101,6 @@ public class SiteManagerMainFragment extends Fragment {
 
             @Override
             public void onFailure(String errorMessage) {
-                // Handle errors here (e.g., show a Toast or Log the error)
                 Log.e("fetchDonationSites", "Error fetching donation sites: " + errorMessage);
                 Toast.makeText(getContext(), "Failed to fetch donation sites", Toast.LENGTH_SHORT).show();
             }
@@ -115,7 +113,6 @@ public class SiteManagerMainFragment extends Fragment {
         firestoreHelper.fetchSiteManagerPhoneNumber(siteManagerId, new FirestoreHelper.OnUserDataFetchListener() {
             @Override
             public void onSuccess(Object data) {
-                // Handle the phone number here
                 String phoneNumber = (String) data;
                 Intent intent = new Intent(getContext(), AddDonationSiteActivity.class);
                 intent.putExtra("phoneNumber", phoneNumber);
@@ -124,11 +121,9 @@ public class SiteManagerMainFragment extends Fragment {
 
             @Override
             public void onFailure(String errorMessage) {
-                // Handle errors here (e.g., show a Toast or Log the error)
                 Log.e("fetchPhoneNumber", "Error fetching phone number: " + errorMessage);
                 Toast.makeText(getContext(), "Failed to fetch phone number", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

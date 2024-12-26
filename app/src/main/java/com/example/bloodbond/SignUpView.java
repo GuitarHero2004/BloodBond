@@ -225,9 +225,9 @@ public class SignUpView extends AppCompatActivity {
 
         } else if ("Blood Donation Site Manager".equals(role)) {
             String phoneNumber = phoneNumberInput.getText().toString().trim();
-            List<DonationSite> sitesManaged = new ArrayList<>();
+            List<String> sitesManagedNames = new ArrayList<>();
 
-            SiteManager siteManager = new SiteManager(uid, name, dob, email, role, phoneNumber, sitesManaged);
+            SiteManager siteManager = new SiteManager(uid, name, dob, email, role, phoneNumber, sitesManagedNames);
 
             firestoreHelper.storeSiteManagerData(uid, siteManager, new FirestoreHelper.OnDataOperationListener() {
                 @Override

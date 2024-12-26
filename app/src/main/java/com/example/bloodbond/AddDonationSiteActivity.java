@@ -14,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bloodbond.helper.AuthHelper;
 import com.example.bloodbond.helper.FirestoreHelper;
-import com.example.bloodbond.model.*;
-
+import com.example.bloodbond.model.DonationSite;
+import com.example.bloodbond.model.SiteManager;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.libraries.places.api.model.Place;
@@ -162,7 +162,6 @@ public class AddDonationSiteActivity extends AppCompatActivity {
         return false;  // Valid if date is today or later
     }
 
-
     private boolean isEndDateValid(String startDate, String endDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         try {
@@ -217,7 +216,9 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             longitude = latLng[1];
         }
 
-        return new DonationSite(name, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes, latitude, longitude, null, null);
+        String siteManagerId = authHelper.getUserId();
+
+        return new DonationSite(name, siteManagerId, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes, latitude, longitude, null, null);
     }
 
     private void storeDonationSite(DonationSite donationSite) {
@@ -246,11 +247,11 @@ public class AddDonationSiteActivity extends AppCompatActivity {
                 SiteManager siteManager = (SiteManager) data;
 
                 // Add the new donation site to the sitesManaged list
-                List<DonationSite> updatedSitesManaged = siteManager.getSitesManaged();
-                updatedSitesManaged.add(donationSite);
+                List<String> updatedSitesManagedNames = siteManager.getSitesManagedNames();
+                updatedSitesManagedNames.add(donationSite.getSiteName());
 
                 // Update the SiteManager document with the new sitesManaged list
-                firestoreHelper.updateSiteManagerSitesManaged(siteManagerId, updatedSitesManaged, new FirestoreHelper.OnDataOperationListener() {
+                firestoreHelper.updateSiteManagerSitesManaged(siteManagerId, updatedSitesManagedNames, new FirestoreHelper.OnDataOperationListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(AddDonationSiteActivity.this, "Donation Site added and SiteManager updated", Toast.LENGTH_SHORT).show();
@@ -270,7 +271,6 @@ public class AddDonationSiteActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void showDatePickerDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();
@@ -327,4 +327,3 @@ public class AddDonationSiteActivity extends AppCompatActivity {
         }
     }
 }
-

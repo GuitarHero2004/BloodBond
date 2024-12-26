@@ -1,5 +1,7 @@
 package com.example.bloodbond.helper;
 
+import android.util.Log;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.example.bloodbond.model.*;
@@ -63,32 +65,17 @@ public class FirestoreHelper {
                 .add(donationSite)
                 .addOnSuccessListener(documentReference -> {
                     donationSite.setSiteId(documentReference.getId());
-                    listener.onSuccess();
+                    firestore.collection("donationSites")
+                            .document(documentReference.getId())
+                            .set(donationSite)
+                            .addOnSuccessListener(aVoid -> listener.onSuccess())
+                            .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
                 })
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
     public void fetchDonationSites(OnDonationSitesFetchListener listener) {
         firestore.collection("donationSites")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<DonationSite> sites = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            DonationSite site = document.toObject(DonationSite.class);
-                            site.setSiteId(document.getId());
-                            sites.add(site);
-                        }
-                        listener.onSuccess(sites);
-                    } else {
-                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
-                    }
-                });
-    }
-
-    public void fetchManagedDonationSites(String siteManagerId, OnDonationSitesFetchListener listener) {
-        firestore.collection("donationSites")
-                .whereEqualTo("siteManagerId", siteManagerId)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -127,36 +114,44 @@ public class FirestoreHelper {
                 });
     }
 
-    public void updateSiteManagerSitesManaged(String siteManagerId, List<DonationSite> sitesManaged, OnDataOperationListener listener) {
+    public void updateSiteManagerSitesManaged(String siteManagerId, List<String> sitesManagedNames, OnDataOperationListener listener) {
         firestore.collection("siteManagers")
                 .document(siteManagerId)
-                .update("sitesManaged", sitesManaged)
+                .update("sitesManagedNames", sitesManagedNames)
                 .addOnSuccessListener(aVoid -> listener.onSuccess())
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
-    public void listenForDonationSitesUpdates(OnDonationSitesFetchListener listener) {
+    public void fetchManagedDonationSites(String siteManagerId, OnDonationSitesFetchListener listener) {
+        Log.d("FirestoreHelper", "Fetching managed donation sites for siteManagerId: " + siteManagerId);
         firestore.collection("donationSites")
-                .addSnapshotListener((value, error) -> {
-                    if (error != null) {
-                        listener.onFailure(error.getMessage());
-                        return;
+                .whereEqualTo("siteManagerId", siteManagerId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DonationSite> sites = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            DonationSite site = document.toObject(DonationSite.class);
+                            site.setSiteId(document.getId());
+                            sites.add(site);
+                        }
+                        Log.d("FirestoreHelper", "Fetched " + sites.size() + " donation sites");
+                        listener.onSuccess(sites);
+                    } else {
+                        String errorMessage = Objects.requireNonNull(task.getException()).getMessage();
+                        Log.e("FirestoreHelper", "Error fetching donation sites: " + errorMessage);
+                        listener.onFailure(errorMessage);
                     }
-                    List<DonationSite> sites = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : value) {
-                        DonationSite site = document.toObject(DonationSite.class);
-                        site.setSiteId(document.getId());
-                        sites.add(site);
-                    }
-                    listener.onSuccess(sites);
                 });
     }
 
     public void listenForManagedDonationSitesUpdates(String siteManagerId, OnDonationSitesFetchListener listener) {
+        Log.d("FirestoreHelper", "Listening for updates to managed donation sites for siteManagerId: " + siteManagerId);
         firestore.collection("donationSites")
                 .whereEqualTo("siteManagerId", siteManagerId)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
+                        Log.e("FirestoreHelper", "Error listening for updates: " + error.getMessage());
                         listener.onFailure(error.getMessage());
                         return;
                     }
@@ -166,6 +161,7 @@ public class FirestoreHelper {
                         site.setSiteId(document.getId());
                         sites.add(site);
                     }
+                    Log.d("FirestoreHelper", "Received update with " + sites.size() + " donation sites");
                     listener.onSuccess(sites);
                 });
     }
@@ -174,6 +170,14 @@ public class FirestoreHelper {
         firestore.collection("donationSites")
                 .document(donationSite.getSiteId())
                 .set(donationSite)
+                .addOnSuccessListener(aVoid -> listener.onSuccess())
+                .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
+    }
+
+    public void deleteDonationSiteData(String siteId, OnDataOperationListener listener) {
+        firestore.collection("donationSites")
+                .document(siteId)
+                .delete()
                 .addOnSuccessListener(aVoid -> listener.onSuccess())
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }

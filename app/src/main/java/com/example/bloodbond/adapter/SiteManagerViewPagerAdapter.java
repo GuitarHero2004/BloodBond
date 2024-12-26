@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.bloodbond.SiteManagerDonationSiteFragment;
 import com.example.bloodbond.fragment.SiteManagerMainFragment;
 import com.example.bloodbond.fragment.SiteManagerUserFragment;
 import com.example.bloodbond.SiteManagerView;
@@ -22,9 +21,7 @@ public class SiteManagerViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new SiteManagerMainFragment();  // First tab
             case 1:
-                return new SiteManagerDonationSiteFragment(); // Second tab
-            case 2:
-                return new SiteManagerUserFragment();   // Third tab
+                return new SiteManagerUserFragment();   // Second tab
             default:
                 return new SiteManagerMainFragment();
         }
@@ -32,6 +29,6 @@ public class SiteManagerViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

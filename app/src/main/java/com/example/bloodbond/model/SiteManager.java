@@ -7,8 +7,9 @@ public class SiteManager extends UserModel {
     private String phoneNumber;
     private List<DonationSite> sitesManaged;
 
-    public SiteManager(String name, String dateOfBirth, String email, String role, String phoneNumber, List<DonationSite> sitesManaged) {
-        super(name, dateOfBirth, email, role);
+    public SiteManager(String userId, String name, String dateOfBirth, String email, String role, String phoneNumber, List<DonationSite> sitesManaged) {
+        super(userId, name, dateOfBirth, email, role);
+        this.setUserId(getUserId());
         this.phoneNumber = phoneNumber;
         this.sitesManaged = sitesManaged != null ? sitesManaged : new ArrayList<>();
     }

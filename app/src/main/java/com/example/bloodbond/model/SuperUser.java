@@ -12,8 +12,8 @@ public class SuperUser extends UserModel{
         this.donationSitesList = null;
     }
 
-    public SuperUser(String name, String dateOfBirth, String email, String role, boolean canGenerateReports, List<String> donationSitesList) {
-        super(name, dateOfBirth, email, role);
+    public SuperUser(String userId, String name, String dateOfBirth, String email, String role, boolean canGenerateReports, List<String> donationSitesList) {
+        super(userId, name, dateOfBirth, email, role);
         this.canGenerateReports = canGenerateReports;
         this.donationSitesList = donationSitesList;
     }

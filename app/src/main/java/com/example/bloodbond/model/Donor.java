@@ -6,8 +6,9 @@ public class Donor extends UserModel {
     private String bloodType;
     private int donationCount;
 
-    public Donor(String name, String dateOfBirth, String email, String role, String bloodType, int donationCount) {
-        super(name, dateOfBirth, email, role);
+    public Donor(String userId, String name, String dateOfBirth, String email, String role, String bloodType, int donationCount) {
+        super(userId, name, dateOfBirth, email, role);
+        this.setUserId(getUserId());
         this.bloodType = bloodType;
         this.donationCount = donationCount;
     }

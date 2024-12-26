@@ -3,12 +3,14 @@ package com.example.bloodbond.model;
 import java.io.Serializable;
 
 public class UserModel implements Serializable {
+    private String userId;
     private String name;
     private String dateOfBirth;
     private String email;
     private String role;
 
-    public UserModel(String name, String dateOfBirth, String email, String role) {
+    public UserModel(String userId, String name, String dateOfBirth, String email, String role) {
+        this.userId = userId;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
@@ -17,6 +19,7 @@ public class UserModel implements Serializable {
 
     // Default constructor required for Firestore
     public UserModel() {
+        this.userId = "";
         this.name = "";
         this.dateOfBirth = "";
         this.email = "";
@@ -24,6 +27,12 @@ public class UserModel implements Serializable {
     }
 
     // Getters and setters
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
     public String getName() {
         return name;
     }

@@ -61,7 +61,10 @@ public class FirestoreHelper {
     public void storeDonationSiteData(DonationSite donationSite, OnDataOperationListener listener) {
         firestore.collection("donationSites")
                 .add(donationSite)
-                .addOnSuccessListener(documentReference -> listener.onSuccess())
+                .addOnSuccessListener(documentReference -> {
+                    donationSite.setSiteId(documentReference.getId());
+                    listener.onSuccess();
+                })
                 .addOnFailureListener(e -> listener.onFailure(e.getMessage()));
     }
 
@@ -70,9 +73,10 @@ public class FirestoreHelper {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        List<DonationSite> sites = new ArrayList<DonationSite>();
+                        List<DonationSite> sites = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             DonationSite site = document.toObject(DonationSite.class);
+                            site.setSiteId(document.getId());
                             sites.add(site);
                         }
                         listener.onSuccess(sites);
@@ -91,6 +95,7 @@ public class FirestoreHelper {
                         List<DonationSite> sites = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             DonationSite site = document.toObject(DonationSite.class);
+                            site.setSiteId(document.getId());
                             sites.add(site);
                         }
                         listener.onSuccess(sites);

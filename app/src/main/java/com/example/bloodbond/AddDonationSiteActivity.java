@@ -36,7 +36,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
     private static final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private final FirestoreHelper firestoreHelper = new FirestoreHelper();
     private final AuthHelper authHelper = new AuthHelper();
-    private EditText siteName, siteAddress, phoneNumber, dateOpen, dateEnd, openingHours, closingHours, description;
+    private EditText siteName, siteAddress, phoneNumber, dateOpen, dateEnd, openingHours, closingHours, description, bloodAmount;
     private Spinner bloodTypeSpinner;
 
     @Override
@@ -60,6 +60,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
         closingHours = findViewById(R.id.closingHours);
         description = findViewById(R.id.description);
         bloodTypeSpinner = findViewById(R.id.bloodTypeSpinner);
+        bloodAmount = findViewById(R.id.bloodAmountNeeded);
 
         // Set up Places Autocomplete
         siteAddress.setOnClickListener(v -> openPlaceAutocomplete());
@@ -134,7 +135,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
                 !dateEnd.getText().toString().isEmpty() &&
                 !openingHours.getText().toString().isEmpty() &&
                 !closingHours.getText().toString().isEmpty() &&
-                !description.getText().toString().isEmpty();
+                !description.getText().toString().isEmpty() && !bloodAmount.getText().toString().isEmpty();
 
         return isValid;
     }
@@ -205,6 +206,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
         String siteClosingHours = closingHours.getText().toString();
         String desc = description.getText().toString();
         String bloodTypes = bloodTypeSpinner.getSelectedItem().toString();
+        int bloodAmountNeeded = Integer.parseInt(bloodAmount.getText().toString());
 
         double latitude = 0.0;
         double longitude = 0.0;
@@ -218,7 +220,7 @@ public class AddDonationSiteActivity extends AppCompatActivity {
 
         String siteManagerId = authHelper.getUserId();
 
-        return new DonationSite(name, siteManagerId, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes, latitude, longitude, null, null);
+        return new DonationSite(name, siteManagerId, address, phone, dateOpened, dateClosed, siteOpeningHours, siteClosingHours, desc, bloodTypes, latitude, longitude, bloodAmountNeeded, 0.0, null, null);
     }
 
     private void storeDonationSite(DonationSite donationSite) {

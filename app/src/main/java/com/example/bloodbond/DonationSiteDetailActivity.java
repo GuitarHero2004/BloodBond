@@ -17,6 +17,7 @@ import com.example.bloodbond.model.Donor;
 import com.example.bloodbond.model.SiteManager;
 
 import java.util.List;
+import java.util.Random;
 
 public class DonationSiteDetailActivity extends AppCompatActivity {
     private static final int UPDATE_DONATION_SITE_REQUEST_CODE = 1;
@@ -56,6 +57,8 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         Button volunteerRegisterButton = findViewById(R.id.donationSiteVolunteerRegisterButton);
         Button viewRegisteredDonorsButton = findViewById(R.id.viewRegisteredDonorsButton);
         Button viewRegisteredVolunteersButton = findViewById(R.id.viewRegisteredVolunteersButton);
+        Button viewBloodAmountCollectedButton = findViewById(R.id.viewBloodAmountCollectedButton);
+        Button generateReportButton = findViewById(R.id.generateReportButton);
         Button editButton = findViewById(R.id.editDonationSiteButton);
         Button deleteButton = findViewById(R.id.deleteDonationSiteButton);
 
@@ -75,15 +78,22 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
             volunteerRegisterButton.setVisibility(View.GONE);
             viewRegisteredDonorsButton.setVisibility(View.GONE);
             viewRegisteredVolunteersButton.setVisibility(View.GONE);
+            viewBloodAmountCollectedButton.setVisibility(View.GONE);
+            generateReportButton.setVisibility(View.GONE);
             editButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.GONE);
         } else if ("siteManagers".equals(userRole)) {
             donorRegisterButton.setVisibility(View.GONE);
+            generateReportButton.setVisibility(View.GONE);
+        } else if ("superUsers".equals(userRole)) {
+            donorRegisterButton.setVisibility(View.GONE);
+            volunteerRegisterButton.setVisibility(View.GONE);
         } else {
             donorRegisterButton.setVisibility(View.GONE);
             volunteerRegisterButton.setVisibility(View.GONE);
             viewRegisteredDonorsButton.setVisibility(View.GONE);
             viewRegisteredVolunteersButton.setVisibility(View.GONE);
+            viewBloodAmountCollectedButton.setVisibility(View.GONE);
             editButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.GONE);
         }
@@ -93,6 +103,8 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         volunteerRegisterButton.setOnClickListener(v -> registerVolunteer());
         viewRegisteredDonorsButton.setOnClickListener(v -> viewRegisteredDonors());
         viewRegisteredVolunteersButton.setOnClickListener(v -> viewRegisteredVolunteers());
+        viewBloodAmountCollectedButton.setOnClickListener(v -> viewBloodAmountCollected());
+        generateReportButton.setOnClickListener(v -> generateReport());
         editButton.setOnClickListener(v -> {
             // Open the UpdateDonationSiteDetailActivity with the donation site data
             Intent intent = new Intent(DonationSiteDetailActivity.this, UpdateDonationSiteDetailActivity.class);
@@ -115,6 +127,15 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
+    private void generateReport() {
+
+    }
+
+    private void viewBloodAmountCollected() {
+        String bloodAmountCollected = String.valueOf(donationSite.getBloodAmountCollected());
+        String bloodAmountNeeded = String.valueOf(donationSite.getBloodAmountNeeded());
+        showBottomSheetDialog("Blood Amount Collected:", "Collected: " + bloodAmountCollected + " ml/" + bloodAmountNeeded + " ml");
+    }
     private void viewRegisteredDonors() {
         StringBuilder donorNames = new StringBuilder();
         for (Donor donor : donationSite.getRegisteredDonors()) {
@@ -189,6 +210,7 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         return false;
     }
 
+    // Java
     private void registerDonor() {
         if (userId == null) {
             Toast.makeText(this, "Error: User ID is missing", Toast.LENGTH_LONG).show();
@@ -208,6 +230,14 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
                 String requiredBloodTypes = donationSite.getBloodTypes();
 
                 if (requiredBloodTypes.contains(donorBloodType)) {
+                    // Generate random blood amount donated
+                    double bloodAmountDonated = generateRandomBloodAmount();
+                    donor.setBloodAmountDonated(bloodAmountDonated);
+
+                    // Update the blood amount collected
+                    double newBloodAmountCollected = donationSite.getBloodAmountCollected() + bloodAmountDonated;
+                    donationSite.setBloodAmountCollected(newBloodAmountCollected);
+
                     donationSite.getRegisteredDonors().add(donor);
                     firestoreHelper.updateDonationSite(donationSite, new FirestoreHelper.OnDataOperationListener() {
                         @Override
@@ -231,6 +261,12 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
                 Toast.makeText(DonationSiteDetailActivity.this, "Failed to fetch donor data: " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private double generateRandomBloodAmount() {
+        Random random = new Random();
+        int randomInt = 5 + random.nextInt(11); // Generates a random integer between 5 and 15
+        return randomInt * 10.0; // Converts to a value like 50.0, 60.0, ..., 150.0
     }
 
     private void registerVolunteer() {

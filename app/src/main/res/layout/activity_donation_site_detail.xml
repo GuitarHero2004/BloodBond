@@ -208,8 +208,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register as Donor"
-            android:textSize="20sp"
-            android:padding="8dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="@color/primary_red" />
 
@@ -218,8 +217,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register as Volunteer"
-            android:textSize="20sp"
-            android:padding="8dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="@color/primary_red"/>
 
@@ -228,8 +226,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="View Registered Donors"
-            android:textSize="20sp"
-            android:padding="8dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="@color/secondary_text"/>
 
@@ -238,8 +235,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="View Registered Volunteers"
-            android:textSize="20sp"
-            android:padding="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/secondary_text"/>
+
+        <Button
+            android:id="@+id/viewBloodAmountCollectedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Blood Amount Collected"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/secondary_text"/>
+
+        <Button
+            android:id="@+id/generateReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generate Report"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="@color/secondary_text"/>
 
@@ -248,8 +262,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Edit Donation Site"
-            android:textSize="20sp"
-            android:padding="8dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="@color/secondary_text"/>
 
@@ -258,8 +271,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete Donation Site"
-            android:textSize="20sp"
-            android:padding="8dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:backgroundTint="@color/secondary_text"/>
     </LinearLayout>

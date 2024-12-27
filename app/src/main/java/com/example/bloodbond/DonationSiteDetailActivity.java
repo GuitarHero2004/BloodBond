@@ -85,6 +85,8 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         } else if ("siteManagers".equals(userRole)) {
             donorRegisterButton.setVisibility(View.GONE);
             generateReportButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
         } else if ("superUsers".equals(userRole)) {
             donorRegisterButton.setVisibility(View.GONE);
             volunteerRegisterButton.setVisibility(View.GONE);

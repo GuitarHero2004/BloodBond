@@ -1,22 +1,23 @@
 package com.example.bloodbond.model;
 
 import java.util.List;
+import java.util.Random;
 
 public class Donor extends UserModel {
     private String bloodType;
-    private int donationCount;
+    private double bloodAmountDonated;
 
-    public Donor(String userId, String name, String dateOfBirth, String email, String role, String bloodType, int donationCount) {
+    public Donor(String userId, String name, String dateOfBirth, String email, String role, String bloodType, double bloodAmountDonated) {
         super(userId, name, dateOfBirth, email, role);
         this.bloodType = bloodType;
-        this.donationCount = donationCount;
+        this.bloodAmountDonated = bloodAmountDonated;
     }
 
     // Default constructor required for Firestore
     public Donor() {
         super();
         this.bloodType = "";
-        this.donationCount = 0;
+        this.bloodAmountDonated = 0.0;
     }
 
     // Getters and setters
@@ -28,11 +29,11 @@ public class Donor extends UserModel {
         this.bloodType = bloodType;
     }
 
-    public int getDonationCount() {
-        return donationCount;
+    public double getBloodAmountDonated() {
+        return bloodAmountDonated;
     }
 
-    public void setDonationCount(int donationCount) {
-        this.donationCount = donationCount;
+    public void setBloodAmountDonated(double bloodAmountDonated) {
+        this.bloodAmountDonated = bloodAmountDonated;
     }
 }

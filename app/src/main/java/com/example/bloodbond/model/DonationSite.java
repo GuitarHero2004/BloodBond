@@ -19,10 +19,11 @@ public class DonationSite implements Serializable {
     private double latitude;
     private double longitude;
     private double bloodAmountNeeded;
+    private double bloodAmountCollected;
     private List<Donor> registeredDonors = new ArrayList<>();
     private List<SiteManager> registeredVolunteers = new ArrayList<>();
 
-    public DonationSite(String siteName, String siteManagerId, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes, double latitude, double longitude, double bloodAmountNeeded, List<Donor> registeredDonors, List<SiteManager> registeredVolunteers) {
+    public DonationSite(String siteName, String siteManagerId, String address, String phoneNumber, String dateOpened, String dateClosed, String openingHours, String closingHours, String description, String bloodTypes, double latitude, double longitude, double bloodAmountNeeded, double bloodAmountCollected, List<Donor> registeredDonors, List<SiteManager> registeredVolunteers) {
         this.siteName = siteName;
         this.siteManagerId = siteManagerId;
         this.address = address;
@@ -36,6 +37,7 @@ public class DonationSite implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.bloodAmountNeeded = bloodAmountNeeded;
+        this.bloodAmountCollected = bloodAmountCollected;
         this.registeredDonors = registeredDonors != null ? registeredDonors : new ArrayList<>();
         this.registeredVolunteers = registeredVolunteers != null ? registeredVolunteers : new ArrayList<>();
     }
@@ -144,6 +146,14 @@ public class DonationSite implements Serializable {
     }
     public void setBloodAmountNeeded(double bloodAmountNeeded) {
         this.bloodAmountNeeded = bloodAmountNeeded;
+    }
+
+    public double getBloodAmountCollected() {
+        return bloodAmountCollected;
+    }
+
+    public void setBloodAmountCollected(double bloodAmountCollected) {
+        this.bloodAmountCollected = bloodAmountCollected;
     }
     public void setLongitude(double longitude) {
         this.longitude = longitude;

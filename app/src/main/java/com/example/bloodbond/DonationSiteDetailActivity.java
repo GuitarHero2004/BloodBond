@@ -1,6 +1,9 @@
 package com.example.bloodbond;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +19,8 @@ import com.example.bloodbond.model.DonationSite;
 import com.example.bloodbond.model.Donor;
 import com.example.bloodbond.model.SiteManager;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -116,19 +121,6 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(v -> deleteDonationSite());
     }
 
-    private void showBottomSheetDialog(String title, String content) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View bottomSheetView = getLayoutInflater().inflate(R.layout.fragment_bottom_sheet_info, null);
-        TextView bottomSheetTitle = bottomSheetView.findViewById(R.id.bottomSheetTitle);
-        TextView bottomSheetContent = bottomSheetView.findViewById(R.id.bottomSheetContent);
-
-        bottomSheetTitle.setText(title);
-        bottomSheetContent.setText(content);
-
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
-    }
-
     private void generateReport() {
         // Generate a report with the donation site data
         String report = "Donation Site Name: " + donationSite.getSiteName() + "\n" +
@@ -141,8 +133,10 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
                 "Description: " + donationSite.getDescription() + "\n" +
                 "Blood Types Needed: " + donationSite.getBloodTypes() + "\n" +
                 "Blood Amount Collected: " + donationSite.getBloodAmountCollected() + " ml" + "\n" +
-                "Blood Amount Needed: " + donationSite.getBloodAmountNeeded() + " ml" + "\n";
-        showBottomSheetDialog("Report", report);
+                "Blood Amount Needed: " + donationSite.getBloodAmountNeeded() + " ml" + "\n" +
+                "Registered Donors: " + donationSite.getRegisteredDonors().size() + "\n" +
+                "Registered Volunteers: " + donationSite.getRegisteredVolunteers().size();
+        showBottomSheetDialog("Donation Site Report", report);
     }
 
     private void viewBloodAmountCollected() {
@@ -164,6 +158,54 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
             volunteerNames.append(volunteer.getName()).append("\n");
         }
         showBottomSheetDialog("Registered Volunteers:", volunteerNames.toString());
+    }
+
+    private void showBottomSheetDialog(String title, String content) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.fragment_bottom_sheet_info, null);
+        TextView bottomSheetTitle = bottomSheetView.findViewById(R.id.bottomSheetTitle);
+        TextView bottomSheetContent = bottomSheetView.findViewById(R.id.bottomSheetContent);
+        Button saveToPdfButton = bottomSheetView.findViewById(R.id.saveAsPdfButton);
+
+        bottomSheetTitle.setText(title);
+        bottomSheetContent.setText(content);
+
+        saveToPdfButton.setOnClickListener(v -> saveContentToPdf(title, content));
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+    }
+
+    private void saveContentToPdf(String title, String content) {
+        PdfDocument pdfDocument = new PdfDocument();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
+        PdfDocument.Page page = pdfDocument.startPage(pageInfo);
+
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        paint.setTextSize(12);
+
+        int x = 10, y = 25;
+        canvas.drawText(title, x, y, paint);
+        y += (int) (paint.descent() - paint.ascent());
+
+        for (String line : content.split("\n")) {
+            y += (int) (paint.descent() - paint.ascent());
+            canvas.drawText(line, x, y, paint);
+        }
+
+        pdfDocument.finishPage(page);
+
+        // Save the PDF file
+        String filePath = getExternalFilesDir(null) + "/report.pdf";
+        try {
+            pdfDocument.writeTo(new FileOutputStream(filePath));
+            Toast.makeText(this, "PDF saved to " + filePath, Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(this, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        pdfDocument.close();
     }
 
     private void deleteDonationSite() {

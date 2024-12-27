@@ -5,12 +5,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DonorView">
+    tools:context=".SuperUserView">
 
-    <TextView
-        android:id="@+id/superUserView"
+    <!-- ViewPager2 for fragments, taking most of the screen -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/superUserViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- TabLayout at the bottom of the screen -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/superUserTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Super User View" />
+        android:elevation="4dp" />
 
 </LinearLayout>

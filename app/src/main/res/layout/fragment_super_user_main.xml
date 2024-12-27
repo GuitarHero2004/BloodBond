@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".fragment.SuperUserMainFragment">
+
+    <!-- Dashboard Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/super_user_main_dashboard"
+            android:layout_weight="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="16dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/updating_notifications"
+            android:src="@drawable/notifications"
+            android:background="@null" />
+    </LinearLayout>
+
+    <!-- TextView to indicate all donation sites -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="All Donation Sites"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textStyle="bold"/>
+
+    <!-- RecyclerView to display all the donation sites-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/donationSitesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"/>
+
+
+</LinearLayout>

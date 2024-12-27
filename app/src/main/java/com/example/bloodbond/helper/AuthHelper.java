@@ -71,7 +71,16 @@ public class AuthHelper {
                                     if (task1.isSuccessful() && task1.getResult().exists()) {
                                         context.startActivity(new Intent(context, SiteManagerView.class));
                                     } else {
-                                        context.startActivity(new Intent(context, SuperUserView.class));
+                                        firestore.collection("superUsers")
+                                                .document(userId)
+                                                .get()
+                                                .addOnCompleteListener(task2 -> {
+                                                    if (task2.isSuccessful() && task2.getResult().exists()) {
+                                                        context.startActivity(new Intent(context, SuperUserView.class));
+                                                    } else {
+                                                        Toast.makeText(context, "User role not found", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
                                     }
                                 });
                     }

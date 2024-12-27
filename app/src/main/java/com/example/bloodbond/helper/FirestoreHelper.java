@@ -60,6 +60,19 @@ public class FirestoreHelper {
                 });
     }
 
+    public void fetchSuperUserData(String superUserId, OnUserDataFetchListener listener) {
+        firestore.collection("superUsers")
+                .document(superUserId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onSuccess(task.getResult().toObject(SuperUser.class));
+                    } else {
+                        listener.onFailure(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
     public void storeDonationSiteData(DonationSite donationSite, OnDataOperationListener listener) {
         firestore.collection("donationSites")
                 .add(donationSite)

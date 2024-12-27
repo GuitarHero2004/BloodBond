@@ -205,7 +205,7 @@ public class SignUpView extends AppCompatActivity {
     private void storeUserDataInFirestore(String uid, String email, String role, String name, String dob) {
         if ("Donor".equals(role)) {
             String bloodType = bloodTypeSpinner.getSelectedItem().toString();
-            Donor donor = new Donor(uid, name, dob, email, role, bloodType, 0);
+            Donor donor = new Donor(uid, name, dob, email, role, bloodType, 0.0);
 
             firestoreHelper.storeDonorData(uid, donor, new FirestoreHelper.OnDataOperationListener() {
                 @Override

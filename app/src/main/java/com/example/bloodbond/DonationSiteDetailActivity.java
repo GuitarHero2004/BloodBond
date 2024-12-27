@@ -85,11 +85,11 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
         } else if ("siteManagers".equals(userRole)) {
             donorRegisterButton.setVisibility(View.GONE);
             generateReportButton.setVisibility(View.GONE);
-            editButton.setVisibility(View.GONE);
-            deleteButton.setVisibility(View.GONE);
         } else if ("superUsers".equals(userRole)) {
             donorRegisterButton.setVisibility(View.GONE);
             volunteerRegisterButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
         } else {
             donorRegisterButton.setVisibility(View.GONE);
             volunteerRegisterButton.setVisibility(View.GONE);
@@ -130,7 +130,19 @@ public class DonationSiteDetailActivity extends AppCompatActivity {
     }
 
     private void generateReport() {
-
+        // Generate a report with the donation site data
+        String report = "Donation Site Name: " + donationSite.getSiteName() + "\n" +
+                "Address: " + donationSite.getAddress() + "\n" +
+                "Contact: " + donationSite.getPhoneNumber() + "\n" +
+                "Date Opened: " + donationSite.getDateOpened() + "\n" +
+                "Date Closed: " + donationSite.getDateClosed() + "\n" +
+                "Working Hours: " + donationSite.getOpeningHours() + "\n" +
+                "Closing Hours: " + donationSite.getClosingHours() + "\n" +
+                "Description: " + donationSite.getDescription() + "\n" +
+                "Blood Types Needed: " + donationSite.getBloodTypes() + "\n" +
+                "Blood Amount Collected: " + donationSite.getBloodAmountCollected() + " ml" + "\n" +
+                "Blood Amount Needed: " + donationSite.getBloodAmountNeeded() + " ml" + "\n";
+        showBottomSheetDialog("Report", report);
     }
 
     private void viewBloodAmountCollected() {

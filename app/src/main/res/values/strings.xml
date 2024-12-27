@@ -50,4 +50,5 @@
     <string name="donation_site_address">Donation Site Address</string>
     <string name="site_navigation_direction_button">Site Navigation Direction Button</string>
     <string name="updating_notifications">Updating notifications</string>
+    <string name="super_user_main_dashboard">Super User Main Dashboard</string>
 </resources>
